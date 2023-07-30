@@ -16,6 +16,18 @@ Session(app)
 def index(): 
     return render_template('home.html', session = session)
 
+@app.route('/signin')
+def signin(): 
+    return render_template('signin.html')
+
+@app.route('/signup')
+def signup(): 
+    return render_template('signup.html')
+
+@app.route('/store')
+def store(): 
+    return render_template('store.html')
+
 
 if __name__ == '__main__': 
     app.run(debug = True)

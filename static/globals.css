@@ -1,0 +1,227 @@
+/* variable css */
+:root {
+    /* pastel colors */
+    --bg-dirty: #EEECE8;
+    --scroll: #949494;
+
+    --background: #ffffff;
+    --text: #000000;
+    --text-secondary: #ffffff;
+    --primary: #000000;
+    --secondary: #d4d4d4;
+    --secondary-light: #f2f2f2;
+    --secondary-dark: #575757;
+    --accent: #000000;
+    --error: #fd4557d3;
+    --success: #2afc46b9;
+
+    /* other variables */
+    --big-radius: 24px;
+    --small-radius: 18px;
+    --border: 2px solid var(--secondary);
+}
+
+/* Reset all web parameters */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    user-select: none;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+a,
+img,
+input,
+button,
+.icon {
+    display: block;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-family: sans-serif;
+}
+
+/* common properties */
+.page {
+    padding-block: 100px;
+}
+
+.flex {
+    display: flex !important;
+}
+
+.gap-5 {
+    gap: 5px;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.title {
+    font-size: 36px;
+}
+
+.txt-ctr {
+    text-align: center;
+}
+
+.cur {
+    cursor: pointer !important;
+}
+
+.subtitle {
+    font-size: 16px;
+    margin-block: 10px;
+}
+
+.black-btn {
+    width: fit-content;
+    margin: 40px auto;
+    padding: 15px 40px;
+    color: var(--background);
+    font-size: 18px;
+    font-weight: 600;
+    background-color: var(--text);
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 200ms ease;
+}
+
+.black-btn:hover {
+    scale: 1.05;
+}
+
+/* ---- navigation bar css ---- */
+nav {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    width: 90vw;
+    left: 5vw;
+    margin: auto auto;
+    padding: 15px 40px;
+    background-color: var(--background);
+    border: var(--border);
+    border-top: none;
+    border-bottom-left-radius: var(--big-radius);
+    border-bottom-right-radius: var(--big-radius);
+}
+
+/* ---- navigation bar logo ---- */
+.logo label {
+    display: flex;
+}
+
+.logo label a {
+    color: var(--black);
+}
+
+.logo label {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+/* ---- navigation bar buttons ---- */
+.nav-actions {
+    display: flex;
+    justify-content: right;
+    gap: 20px;
+    transition: 500ms;
+}
+
+.nav-actions button {
+    border: 0px solid transparent;
+    background-color: transparent;
+}
+
+.nav-btn {
+    position: relative;
+    text-align: center;
+}
+
+.nav-actions button p {
+    color: var(--text);
+    font-size: 14px;
+}
+
+.nav-btn .icon {
+    margin-inline: auto;
+    font-size: 22px;
+    margin-bottom: 5px;
+    color: var(--text);
+}
+
+@media (max-width: 700px) {
+    header {
+        background-color: var(--white);
+    }
+
+    nav {
+        padding: 20px;
+        justify-content: center;
+    }
+
+    .logo label a {
+        text-align: center;
+        /* font-size: 24px; */
+    }
+
+    .nav-actions {
+        background-color: var(--bg-dirty);
+        position: fixed;
+        bottom: 0;
+        left: 5vw;
+        width: 90vw;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 5px;
+        padding-block: 20px;
+        box-shadow: 0 -2px 20px hsla(0, 0%, 0%, 0.1);
+        z-index: 10;
+        border: var(--border);
+        border-color: var(--secondary);
+        border-top-left-radius: var(--big-radius);
+        border-top-right-radius: var(--big-radius);
+    }
+}
+
+/* Scroll Bar CSS */
+::-webkit-scrollbar {
+    height: 2px;
+    padding: 20px;
+    background-color: var(--grey);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--grey);
+    /* border-radius: 10px; */
+}
+
+#navy-card {
+    color: #000080;
+}
+
+#blue-card {
+    color: #0000ff;
+}
+
+#red-card {
+    color: #ff0000;
+}
+
+#orange-card {
+    color: #ffa500;
+}
