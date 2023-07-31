@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harvest Haven</title>
+    <!-- Stylesheet Link -->
+    <link rel="stylesheet" href="./static/globals.css">
+    <link rel="stylesheet" href="./static/form.css">
+    <!-- Script Tag -->
+    <script src="./static/script.js" defer></script>
+    <!-- Icons Link -->
+    <script src="https://kit.fontawesome.com/6d232ec003.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <nav>
+        <div class="logo">
+            <label><a href="./index.html">Harvest Haven</a></label>
+        </div>
+        <div class="nav-actions">
+            <button class="nav-btn">
+                <a href="./Admin/admin-login.html">
+                    <i class="fa-solid fa-wrench icon"></i>
+                    <p class="nav-action-label">Admin</p>
+                </a>
+            </button>
+
+            <button class="nav-btn">
+                <a href="./store.html">
+                    <i class="fa-solid fa-store icon"></i>
+                    <p class="nav-action-label">Store</p>
+                </a>
+            </button>
+
+            <button class="nav-btn">
+                <a href="./cart.html">
+                    <i class="fa-solid fa-cart icon"></i>
+                    <p class="nav-action-label">Cart</p>
+                </a>
+            </button>
+
+            <button class="nav-btn">
+                <a href="./userDashboard.html">
+                    <i class="fa-solid fa-user icon"></i>
+                    <p class="nav-action-label">Dashboard</p>
+                </a>
+            </button>
+
+            <button class="nav-btn">
+                <a href="./signin.html">
+                    <i class="fa-solid fa-arrow-right-to-bracket icon"></i>
+                    <p class="nav-action-label">Sign In</p>
+                </a>
+            </button>
+
+            <button class="nav-btn">
+                <a href="./signout.html">
+                    <i class="fa-solid fa-arrow-right-from-bracket icon"></i>
+                    <p class="nav-action-label">Sign Out</p>
+                </a>
+            </button>
+        </div>
+    </nav>
+
+    <div class="home">
+        <div class="form-page flex">
+            <div class="form-left"></div>
+
+            <div class="form-right flex sign-in">
+                <div class="form">
+                    <h1 class="title">Create New Account</h1>
+                    <h1 class="subtitle">** Enter all details to create account **</h1>
+
+                    <form action="?" method="post">
+                        <div class="input-box">
+                            <div class="input msg" id="red">
+                                Email Already Exists!
+                            </div>
+                        </div>
+
+                        <div class="input-box">
+                            <label 
+                                for="name">
+                                Full Name: 
+                            </label>
+
+                            <input 
+                                class="input"
+                                type="text" 
+                                name="name" 
+                                id="name" 
+                                placeholder="Eg: Hardik Shah"
+                                autocomplete="off"
+                                required
+                            >
+                        </div>
+
+                        <div class="input-box">
+                            <label 
+                                for="email">
+                                Email Address: 
+                            </label>
+
+                            <input 
+                                class="input"
+                                type="email" 
+                                name="email" 
+                                id="email" 
+                                placeholder="Eg: abc@gmail.com"
+                                autocomplete="off"
+                                required
+                            >
+                        </div>
+
+                        <div class="input-box">
+                            <label 
+                                for="gender">
+                                Gender: 
+                            </label>
+
+                            <select 
+                                class="input"
+                                name="gender" 
+                                id="gender"
+                                required>
+                                <option value="">-- None --</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+
+                        <div class="input-box">
+                            <label 
+                                for="passcode">
+                                Password: 
+                            </label>
+
+                            <input 
+                                class="input"
+                                type="password" 
+                                name="password" 
+                                id="password" 
+                                placeholder="Eg: *****"
+                                autocomplete="off"
+                                required
+                            >
+                        </div>
+
+                        <div class="input-box">
+                            <label 
+                                for="c-passcode">
+                                Retype Password: 
+                            </label>
+
+                            <input 
+                                class="input"
+                                type="password" 
+                                name="c-password" 
+                                id="c-password" 
+                                placeholder="Eg: *****"
+                                autocomplete="off"
+                                required
+                            >
+                        </div>
+
+                        <div class="input-box">
+                            <button 
+                                class="form-btn"
+                                type="submit">
+                                Sign Up
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="below-form flex">
+                        <span class="flex gap-5">Already have an account? <a href="/signin.html">Sign In</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

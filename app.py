@@ -28,6 +28,46 @@ def signup():
 def store(): 
     return render_template('store.html')
 
+@app.route('/cart')
+def store(): 
+    return render_template('cart.html')
+
+@app.route('/checkout')
+def store(): 
+    return render_template('checkout.html')
+
+@app.route('/admin-dashboard')
+def store(): 
+    return render_template('adminDashboard.html')
+
+@app.route('/admin-stats')
+def store(): 
+    return render_template('adminStats.html')
+
+@app.route('/add-item')
+def store(): 
+    return render_template('addItem.html')
+
+@app.route('/edit-item')
+def store(): 
+    return render_template('editItem.html')
+
+@app.route('/delete-item')
+def store(): 
+    return render_template('deleteItem.html')
+
+@app.route('/add-category')
+def store(): 
+    return render_template('addCategory.html')
+
+@app.route('/edit-category')
+def store(): 
+    return render_template('editCategory.html')
+
+@app.route('/delete-category')
+def store(): 
+    return render_template('deleteCategory.html')
+
 
 if __name__ == '__main__': 
     app.run(debug = True)
