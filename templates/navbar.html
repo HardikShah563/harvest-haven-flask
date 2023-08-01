@@ -1,0 +1,49 @@
+{% macro navbar(session) %}
+
+<nav>
+    <div class="logo">
+        <label><a href="./home.html">Harvest Haven</a></label>
+    </div>
+    <div class="nav-actions">
+        {% if session.isAdmin %}
+        <button class="nav-btn">
+            <a href="./adminDashboard.html">
+                <i class="fa-solid fa-wrench icon"></i>
+                <p class="nav-action-label">Admin</p>
+            </a>
+        </button>
+        {% endif %}
+
+        <button class="nav-btn">
+            <a href="./store.html">
+                <i class="fa-solid fa-store icon"></i>
+                <p class="nav-action-label">Store</p>
+            </a>
+        </button>
+
+        {% if session.u_id %}
+        <button class="nav-btn">
+            <a href="./cart.html">
+                <i class="fa-solid fa-cart-arrow-down icon"></i>
+                <p class="nav-action-label">Cart</p>
+            </a>
+        </button>
+        
+        <button class="nav-btn">
+            <a href="./signout.html">
+                <i class="fa-solid fa-arrow-right-from-bracket icon"></i>
+                <p class="nav-action-label">Sign Out</p>
+            </a>
+        </button>
+        {% else %}
+        <button class="nav-btn">
+            <a href="./signin.html">
+                <i class="fa-solid fa-arrow-right-to-bracket icon"></i>
+                <p class="nav-action-label">Sign In</p>
+            </a>
+        </button>
+        {% endif %}
+    </div>
+</nav>
+
+{% endmacro %}

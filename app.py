@@ -18,55 +18,55 @@ def index():
 
 @app.route('/signin')
 def signin(): 
-    return render_template('signin.html')
+    return render_template('signin.html', session = session)
 
 @app.route('/signup')
 def signup(): 
-    return render_template('signup.html')
+    return render_template('signup.html', session = session)
 
 @app.route('/store')
 def store(): 
-    return render_template('store.html')
+    return render_template('store.html', session = session)
 
 @app.route('/cart')
-def store(): 
-    return render_template('cart.html')
+def cart(): 
+    return render_template('cart.html', session = session)
 
 @app.route('/checkout')
-def store(): 
-    return render_template('checkout.html')
+def checkout(): 
+    return render_template('checkout.html', session = session)
 
 @app.route('/admin-dashboard')
-def store(): 
-    return render_template('adminDashboard.html')
+def adminDashboard(): 
+    return render_template('adminDashboard.html', session = session)
 
 @app.route('/admin-stats')
-def store(): 
-    return render_template('adminStats.html')
+def adminStats(): 
+    return render_template('adminStats.html', session = session)
 
 @app.route('/add-item')
-def store(): 
-    return render_template('addItem.html')
+def addItem(): 
+    return render_template('addItem.html', session = session)
 
 @app.route('/edit-item')
-def store(): 
-    return render_template('editItem.html')
+def editItem(): 
+    return render_template('editItem.html', session = session)
 
 @app.route('/delete-item')
-def store(): 
-    return render_template('deleteItem.html')
+def deleteItem(): 
+    return render_template('deleteItem.html', session = session)
 
 @app.route('/add-category')
-def store(): 
-    return render_template('addCategory.html')
+def addCategory(): 
+    return render_template('addCategory.html', session = session)
 
 @app.route('/edit-category')
-def store(): 
-    return render_template('editCategory.html')
+def editCategory(): 
+    return render_template('editCategory.html', session = session)
 
 @app.route('/delete-category')
-def store(): 
-    return render_template('deleteCategory.html')
+def deleteCategory(): 
+    return render_template('deleteCategory.html', session = session)
 
 
 if __name__ == '__main__': 
