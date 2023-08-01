@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harvest Haven</title>
+    <!-- Stylesheet Link -->
+    <link rel="stylesheet" href="./static/globals.css">
+    <link rel="stylesheet" href="./static/store.css">
+    <link rel="stylesheet" href="./static/admin.css">
+    <!-- Script Tag -->
+    <script src="./static/script.js" defer></script>
+    <!-- Icons Link -->
+    <script src="https://kit.fontawesome.com/6d232ec003.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <nav>
+        <div class="logo">
+            <label><a href="./index.html">Harvest Haven</a></label>
+        </div>
+        <div class="nav-actions">
+            <button class="nav-btn">
+                <a href="./adminDashboard.html">
+                    <i class="fa-solid fa-wrench icon"></i>
+                    <p class="nav-action-label">Admin</p>
+                </a>
+            </button>
+
+            <button class="nav-btn">
+                <a href="./store.html">
+                    <i class="fa-solid fa-store icon"></i>
+                    <p class="nav-action-label">Store</p>
+                </a>
+            </button>
+
+            <button class="nav-btn">
+                <a href="./cart.html">
+                    <i class="fa-solid fa-cart-arrow-down icon"></i>
+                    <p class="nav-action-label">Cart</p>
+                </a>
+            </button>
+
+            <button class="nav-btn">
+                <a href="./userDashboard.html">
+                    <i class="fa-solid fa-user icon"></i>
+                    <p class="nav-action-label">Dashboard</p>
+                </a>
+            </button>
+
+            <button class="nav-btn">
+                <a href="./signin.html">
+                    <i class="fa-solid fa-arrow-right-to-bracket icon"></i>
+                    <p class="nav-action-label">Sign In</p>
+                </a>
+            </button>
+
+            <button class="nav-btn">
+                <a href="./signout.html">
+                    <i class="fa-solid fa-arrow-right-from-bracket icon"></i>
+                    <p class="nav-action-label">Sign Out</p>
+                </a>
+            </button>
+        </div>
+    </nav>
+
+    <div class="page admin-page">
+        <h1 class="title txt-ctr">Welcome Store Manager</h1>
+
+        <div class="store">
+            <div class="store-item category">
+                <div class="store-item-title txt-ctr">
+                    LOOSE PRODUCTS
+                </div>
+
+                <div class="edit-category flex gap-5">
+                    <a href="./editCategory.html" class="item add item-btn gap-5 w-100" id="edit">
+                        <i class="fa-solid fa-pen-to-square icon"></i>
+                        Edit
+                    </a>
+                    <a href="./deleteCategory.html" class="item add item-btn gap-5 w-100" id="delete">
+                        <i class="fa-solid fa-trash icon"></i>
+                        Delete
+                    </a>
+                </div>
+
+                <div class="category-items">
+                    <div class="item">
+                        <div class="item-name">
+                            SACK OF ONIONS
+                        </div>
+                        <div class="item-amt">
+                            ₹20.99
+                        </div>
+                        <div class="flex">
+                            <a href="./editItem.html" class="item-btn" id="edit">
+                                <i class="fa-solid fa-pen-to-square icon"></i>
+                            </a>
+                            <a href="./deleteItem.html" class="item-btn" id="delete">
+                                <i class="fa-solid fa-trash icon"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="item-name">
+                            FRESH CARROTS
+                        </div>
+                        <div class="item-amt">
+                            ₹20.99
+                        </div>
+                        <div class="flex">
+                            <a href="./editItem.html" class="item-btn" id="edit">
+                                <i class="fa-solid fa-pen-to-square icon"></i>
+                            </a>
+                            <a href="./deleteItem.html" class="item-btn" id="delete">
+                                <i class="fa-solid fa-trash icon"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="item-name">
+                            SACK OF POTATOS
+                        </div>
+                        <div class="item-amt">
+                            ₹20.99
+                        </div>
+                        <div class="flex">
+                            <a href="./editItem.html" class="item-btn" id="edit">
+                                <i class="fa-solid fa-pen-to-square icon"></i>
+                            </a>
+                            <a href="./deleteItem.html" class="item-btn" id="delete">
+                                <i class="fa-solid fa-trash icon"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="item-name">
+                            SACK OF ONIONS
+                        </div>
+                        <div class="item-amt">
+                            ₹20.99
+                        </div>
+                        <div class="flex">
+                            <a href="./editItem.html" class="item-btn" id="edit">
+                                <i class="fa-solid fa-pen-to-square icon"></i>
+                            </a>
+                            <a href="./deleteItem.html" class="item-btn" id="delete">
+                                <i class="fa-solid fa-trash icon"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="./addItem.html" class="item add item-btn">
+                    + Add New Product
+                </a>
+            </div>
+
+            <div class="store-item category">
+                <div class="store-item-title txt-ctr">
+                    PACKAGED FOOD
+                </div>
+
+                <div class="edit-category flex gap-5">
+                    <a href="./editCategory.html" class="item add item-btn gap-5 w-100" id="edit">
+                        <i class="fa-solid fa-pen-to-square icon"></i>
+                        Edit
+                    </a>
+                    <a href="./deleteCategory.html" class="item add item-btn gap-5 w-100" id="delete">
+                        <i class="fa-solid fa-trash icon"></i>
+                        Delete
+                    </a>
+                </div>
+
+                <div class="category-items">
+                    <div class="item">
+                        <div class="item-name">
+                            SACK OF ONIONS
+                        </div>
+                        <div class="item-amt">
+                            ₹20.99
+                        </div>
+                        <div class="flex">
+                            <a href="./editItem.html" class="item-btn" id="edit">
+                                <i class="fa-solid fa-pen-to-square icon"></i>
+                            </a>
+                            <a href="./deleteItem.html" class="item-btn" id="delete">
+                                <i class="fa-solid fa-trash icon"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="item-name">
+                            SACK OF ONIONS
+                        </div>
+                        <div class="item-amt">
+                            ₹20.99
+                        </div>
+                        <div class="flex">
+                            <a href="./editItem.html" class="item-btn" id="edit">
+                                <i class="fa-solid fa-pen-to-square icon"></i>
+                            </a>
+                            <a href="./deleteItem.html" class="item-btn" id="delete">
+                                <i class="fa-solid fa-trash icon"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="./addItem.html" class="item add item-btn">
+                    + Add New Product
+                </a>
+            </div>
+
+            <div class="store-item category">
+                <div class="store-item-title txt-ctr">
+                    DAIRY PRODUCTS
+                </div>
+
+                <div class="edit-category flex gap-5">
+                    <a href="./editCategory.html" class="item add item-btn gap-5 w-100" id="edit">
+                        <i class="fa-solid fa-pen-to-square icon"></i>
+                        Edit
+                    </a>
+                    <a href="./deleteCategory.html" class="item add item-btn gap-5 w-100" id="delete">
+                        <i class="fa-solid fa-trash icon"></i>
+                        Delete
+                    </a>
+                </div>
+
+                <div class="category-items">
+                    <div class="item">
+                        <div class="item-name">
+                            SACK OF ONIONS
+                        </div>
+                        <div class="item-amt">
+                            ₹20.99
+                        </div>
+                        <div class="flex">
+                            <a href="./editItem.html" class="item-btn" id="edit">
+                                <i class="fa-solid fa-pen-to-square icon"></i>
+                            </a>
+                            <a href="./deleteItem.html" class="item-btn" id="delete">
+                                <i class="fa-solid fa-trash icon"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="item-name">
+                            SACK OF ONIONS
+                        </div>
+                        <div class="item-amt">
+                            ₹20.99
+                        </div>
+                        <div class="flex">
+                            <a href="./editItem.html" class="item-btn" id="edit">
+                                <i class="fa-solid fa-pen-to-square icon"></i>
+                            </a>
+                            <a href="./deleteItem.html" class="item-btn" id="delete">
+                                <i class="fa-solid fa-trash icon"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="item-name">
+                            SACK OF ONIONS
+                        </div>
+                        <div class="item-amt">
+                            ₹20.99
+                        </div>
+                        <div class="flex">
+                            <a href="./editItem.html" class="item-btn" id="edit">
+                                <i class="fa-solid fa-pen-to-square icon"></i>
+                            </a>
+                            <a href="./deleteItem.html" class="item-btn" id="delete">
+                                <i class="fa-solid fa-trash icon"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="./addItem.html" class="item add item-btn">
+                    + Add New Product
+                </a>
+            </div>
+
+            <div class="store-item category">
+                <div class="store-item-title txt-ctr">
+                    MEAT BASED PRODUCTS
+                </div>
+
+                <div class="edit-category flex gap-5">
+                    <a href="./editCategory.html" class="item add item-btn gap-5 w-100" id="edit">
+                        <i class="fa-solid fa-pen-to-square icon"></i>
+                        Edit
+                    </a>
+                    <a href="./deleteCategory.html" class="item add item-btn gap-5 w-100" id="delete">
+                        <i class="fa-solid fa-trash icon"></i>
+                        Delete
+                    </a>
+                </div>
+
+                <div class="category-items">
+                    <div class="item">
+                        <div class="item-name">
+                            SACK OF ONIONS
+                        </div>
+                        <div class="item-amt">
+                            ₹20.99
+                        </div>
+                        <div class="flex">
+                            <a href="./editItem.html" class="item-btn" id="edit">
+                                <i class="fa-solid fa-pen-to-square icon"></i>
+                            </a>
+                            <a href="./deleteItem.html" class="item-btn" id="delete">
+                                <i class="fa-solid fa-trash icon"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="item-name">
+                            SACK OF ONIONS
+                        </div>
+                        <div class="item-amt">
+                            ₹20.99
+                        </div>
+                        <div class="flex">
+                            <a href="./editItem.html" class="item-btn" id="edit">
+                                <i class="fa-solid fa-pen-to-square icon"></i>
+                            </a>
+                            <a href="./deleteItem.html" class="item-btn" id="delete">
+                                <i class="fa-solid fa-trash icon"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="./addItem.html" class="item add item-btn">
+                    + Add New Product
+                </a>
+            </div>
+
+            <div class="store-item category">
+                <div class="store-item-title txt-ctr">
+                    PULSES AND GRAINS
+                </div>
+
+                <div class="edit-category flex gap-5">
+                    <a href="./editCategory.html" class="item add item-btn gap-5 w-100" id="edit">
+                        <i class="fa-solid fa-pen-to-square icon"></i>
+                        Edit
+                    </a>
+                    <a href="./deleteCategory.html" class="item add item-btn gap-5 w-100" id="delete">
+                        <i class="fa-solid fa-trash icon"></i>
+                        Delete
+                    </a>
+                </div>
+
+                <div class="category-items">
+                    <div class="item">
+                        <div class="item-name">
+                            SACK OF ONIONS
+                        </div>
+                        <div class="item-amt">
+                            ₹20.99
+                        </div>
+                        <div class="flex">
+                            <a href="./editItem.html" class="item-btn" id="edit">
+                                <i class="fa-solid fa-pen-to-square icon"></i>
+                            </a>
+                            <a href="./deleteItem.html" class="item-btn" id="delete">
+                                <i class="fa-solid fa-trash icon"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="item-name">
+                            SACK OF ONIONS
+                        </div>
+                        <div class="item-amt">
+                            ₹20.99
+                        </div>
+                        <div class="flex">
+                            <a href="./editItem.html" class="item-btn" id="edit">
+                                <i class="fa-solid fa-pen-to-square icon"></i>
+                            </a>
+                            <a href="./deleteItem.html" class="item-btn" id="delete">
+                                <i class="fa-solid fa-trash icon"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="item-name">
+                            SACK OF ONIONS
+                        </div>
+                        <div class="item-amt">
+                            ₹20.99
+                        </div>
+                        <div class="flex">
+                            <a href="./editItem.html" class="item-btn" id="edit">
+                                <i class="fa-solid fa-pen-to-square icon"></i>
+                            </a>
+                            <a href="./deleteItem.html" class="item-btn" id="delete">
+                                <i class="fa-solid fa-trash icon"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="item-name">
+                            SACK OF ONIONS
+                        </div>
+                        <div class="item-amt">
+                            ₹20.99
+                        </div>
+                        <div class="flex">
+                            <a href="./editItem.html" class="item-btn" id="edit">
+                                <i class="fa-solid fa-pen-to-square icon"></i>
+                            </a>
+                            <a href="./deleteItem.html" class="item-btn" id="delete">
+                                <i class="fa-solid fa-trash icon"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="./addItem.html" class="item add item-btn">
+                    + Add New Product
+                </a>
+            </div>
+        </div>
+
+        <a href="./addCategory.html" class="black-btn">
+            <i class="fa-solid fa-plus"></i>
+            &nbsp;&nbsp;
+            ADD NEW CATEGORY
+        </a>
+
+        <a href="./adminStats.html" class="black-btn">
+            <i class="fa-solid fa-chart-simple"></i>
+            &nbsp;&nbsp;
+            VIEW STATISTICS
+        </a>
+    </div>
+</body>
+
+</html>

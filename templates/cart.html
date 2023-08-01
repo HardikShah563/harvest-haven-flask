@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Maven</title>
+    <!-- Stylesheet Link -->
+    <link rel="stylesheet" href="./static/globals.css">
+    <link rel="stylesheet" href="./static/store.css">
+    <!-- Script Tag -->
+    <!-- <script src="./static/script.js" defer></script> -->
+    <!-- Icons Link -->
+    <script src="https://kit.fontawesome.com/6d232ec003.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <nav>
+        <div class="logo">
+            <label><a href="./index.html">Harvest Haven</a></label>
+        </div>
+        <div class="nav-actions">
+            <button class="nav-btn">
+                <a href="./Admin/admin-login.html">
+                    <i class="fa-solid fa-wrench icon"></i>
+                    <p class="nav-action-label">Admin</p>
+                </a>
+            </button>
+
+            <button class="nav-btn">
+                <a href="./movies.html">
+                    <i class="fa-solid fa-store icon"></i>
+                    <p class="nav-action-label">Store</p>
+                </a>
+            </button>
+
+            <button class="nav-btn">
+                <a href="./cart.html">
+                    <i class="fa-solid fa-cart-arrow-down icon"></i>
+                    <p class="nav-action-label">Cart</p>
+                </a>
+            </button>
+
+            <button class="nav-btn">
+                <a href="./userDashboard.html">
+                    <i class="fa-solid fa-user icon"></i>
+                    <p class="nav-action-label">Dashboard</p>
+                </a>
+            </button>
+
+            <button class="nav-btn">
+                <a href="./signin.html">
+                    <i class="fa-solid fa-arrow-right-to-bracket icon"></i>
+                    <p class="nav-action-label">Sign In</p>
+                </a>
+            </button>
+
+            <button class="nav-btn">
+                <a href="./signout.html">
+                    <i class="fa-solid fa-arrow-right-from-bracket icon"></i>
+                    <p class="nav-action-label">Sign Out</p>
+                </a>
+            </button>
+        </div>
+    </nav>
+
+    <div class="page">
+        <h1 class="title txt-ctr">CART</h1>
+
+        <div class="store" id="cart-items">
+        </div>
+
+        <a href="./checkout.html" class="black-btn">PLACE ORDER</a>
+    </div>
+</body>
+
+<script>
+    cart = [{
+    name: "SACK OF ONION",
+    qty: "1kg",
+    price: 54.99,
+    type: "loose",
+    url: "onions"
+}, {
+    name: "CORN",
+    qty: "1 full",
+    price: 18.49,
+    type: "loose",
+    url: "corn"
+}, {
+    name: "MILK",
+    qty: "500ml",
+    price: 54.49,
+    type: "packaged",
+    url: "milk"
+}, {
+    name: "FROZEN GREEN PEAS",
+    qty: "500g",
+    price: 129.99,
+    type: "packaged",
+    url: "peas"
+}, {
+    name: "CEREALS",
+    qty: "250g",
+    price: 63.49,
+    type: "packaged",
+    url: "cereals"
+}];
+
+let emptyDiv3 = document.getElementById("cart-items");
+
+function cartItems() {
+    for (let i = cart.length - 1; i >= 0; i--) {
+        let newCartItem = `
+            <div class="store-item">
+                <div class="flex">
+                    <div class="store-item-img">
+                        <img src="./assets/${cart[i].url}.png" alt="store-item">
+                    </div>
+                    
+                    <div class="store-item-text">
+                        <p class="store-item-title">
+                        ${cart[i].name} (${cart[i].qty})
+                        </p>
+                        <p class="store-item-price">
+                            ₹${cart[i].price}
+                        </p>
+                    </div>
+                </div>
+        
+                <div class="quantity">
+                    <div class="minus">
+                        <i class="fa-solid fa-minus"></i>
+                    </div>
+                    <div class="qty">01</div>
+                    <div class="plus">
+                        <i class="fa-solid fa-plus"></i>
+                    </div>
+                </div>
+            </div>
+        `;
+        emptyDiv3.insertAdjacentHTML("afterbegin", newCartItem);
+    }
+}
+
+cartItems();
+</script>
+
+</html>
