@@ -1,0 +1,48 @@
+{% from 'navbar.html' import navbar %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Maven</title>
+    <!-- Stylesheet Link -->
+    <link rel="stylesheet" href="./static/globals.css">
+    <link rel="stylesheet" href="./static/store.css">
+    <!-- Script Tag -->
+    <script src="./static/script.js" defer></script>
+    <!-- Icons Link -->
+    <script src="https://kit.fontawesome.com/6d232ec003.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    {{ navbar(session) }}
+
+    <div class="page">
+        <div class="store-banner flex">
+            <div class="store-banner-left">
+                <h1 class="title">Save upto 50% off</h1>
+                <a class="" href="#">Shop Now</a>
+            </div>
+            <div>
+                <img class="store-banner-img" src="./assets/store-banner.png" alt="store banner img">
+            </div>
+        </div>
+
+        <h1 class="title txt-ctr">LOOSE PRODUCTS</h1>
+
+        <div class="store" id="loose-store"></div>
+
+        <br><br><br><br>
+
+        <h1 class="title txt-ctr">PACKAGED PRODUCTS</h1>
+
+        <div class="store" id="packaged-store"></div>
+
+        <a href="./cart.html" class="black-btn">GO TO CART</a>
+    </div>
+</body>
+
+</html>

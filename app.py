@@ -13,7 +13,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 @app.route('/')
-def index(): 
+def home(): 
     return render_template('home.html', session = session)
 
 @app.route('/signin')

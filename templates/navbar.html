@@ -2,12 +2,12 @@
 
 <nav>
     <div class="logo">
-        <label><a href="./home.html">Harvest Haven</a></label>
+        <label><a href="{{ url_for('home') }}">Harvest Haven</a></label>
     </div>
     <div class="nav-actions">
         {% if session.isAdmin %}
         <button class="nav-btn">
-            <a href="./adminDashboard.html">
+            <a href="{{ url_for('adminDashboard') }}">
                 <i class="fa-solid fa-wrench icon"></i>
                 <p class="nav-action-label">Admin</p>
             </a>
@@ -15,7 +15,7 @@
         {% endif %}
 
         <button class="nav-btn">
-            <a href="./store.html">
+            <a href="{{ url_for('store') }}">
                 <i class="fa-solid fa-store icon"></i>
                 <p class="nav-action-label">Store</p>
             </a>
@@ -23,21 +23,21 @@
 
         {% if session.u_id %}
         <button class="nav-btn">
-            <a href="./cart.html">
+            <a href="{{ url_for('cart') }}">
                 <i class="fa-solid fa-cart-arrow-down icon"></i>
                 <p class="nav-action-label">Cart</p>
             </a>
         </button>
         
         <button class="nav-btn">
-            <a href="./signout.html">
+            <a href="{{ url_for(signout) }}">
                 <i class="fa-solid fa-arrow-right-from-bracket icon"></i>
                 <p class="nav-action-label">Sign Out</p>
             </a>
         </button>
         {% else %}
         <button class="nav-btn">
-            <a href="./signin.html">
+            <a href="{{ url_for(signin) }}">
                 <i class="fa-solid fa-arrow-right-to-bracket icon"></i>
                 <p class="nav-action-label">Sign In</p>
             </a>
