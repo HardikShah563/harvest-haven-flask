@@ -52,6 +52,10 @@
     border-radius: 4px;
 }
 
+.input.msg {
+    background-color: transparent;
+}
+
 .form-btn {
     margin-block: 1rem;
     cursor: pointer;

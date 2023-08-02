@@ -29,10 +29,10 @@
                     <h1 class="title">Welcome Back</h1>
                     <h1 class="subtitle">** Enter your details to purchase delicious goods **</h1>
 
-                    <form action="?" method="post">
+                    <form action="{{ url_for('signin') }}" method="post">
                         <div class="input-box">
-                            <div class="input msg" id="green">
-                                Login Successful!
+                            <div class="input msg" id={{msgColor}}>
+                                {{msg}}
                             </div>
                         </div>
 
@@ -80,7 +80,7 @@
                     </form>
 
                     <div class="below-form flex">
-                        <span class="flex gap-5">Don't have an account? <a href="/signup.html">Sign Up</a></span>
+                        <span class="flex gap-5">Don't have an account? <a href="{{ url_for('signup') }}">Sign Up</a></span>
                     </div>
                 </div>
             </div>

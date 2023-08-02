@@ -30,14 +30,14 @@
         </button>
         
         <button class="nav-btn">
-            <a href="{{ url_for(signout) }}">
+            <a href="{{ url_for('signout') }}">
                 <i class="fa-solid fa-arrow-right-from-bracket icon"></i>
                 <p class="nav-action-label">Sign Out</p>
             </a>
         </button>
         {% else %}
         <button class="nav-btn">
-            <a href="{{ url_for(signin) }}">
+            <a href="{{ url_for('signin') }}">
                 <i class="fa-solid fa-arrow-right-to-bracket icon"></i>
                 <p class="nav-action-label">Sign In</p>
             </a>
