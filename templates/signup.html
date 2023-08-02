@@ -9,10 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Harvest Haven</title>
     <!-- Stylesheet Link -->
-    <link rel="stylesheet" href="./static/globals.css">
-    <link rel="stylesheet" href="./static/form.css">
+    <link rel="stylesheet" href="../static/globals.css">
+    <link rel="stylesheet" href="../static/form.css">
     <!-- Script Tag -->
-    <script src="./static/script.js" defer></script>
+    <script src="../static/script.js" defer></script>
     <!-- Icons Link -->
     <script src="https://kit.fontawesome.com/6d232ec003.js" crossorigin="anonymous"></script>
 </head>
@@ -29,10 +29,10 @@
                     <h1 class="title">Create New Account</h1>
                     <h1 class="subtitle">** Enter all details to create account **</h1>
 
-                    <form action="?" method="post">
+                    <form action="{{ url_for('signup') }}" method="post">
                         <div class="input-box">
-                            <div class="input msg" id="red">
-                                Email Already Exists!
+                            <div class="input msg" id={{msgColor}}>
+                                {{msg}}
                             </div>
                         </div>
 
@@ -131,7 +131,7 @@
                     </form>
 
                     <div class="below-form flex">
-                        <span class="flex gap-5">Already have an account? <a href="/signin.html">Sign In</a></span>
+                        <span class="flex gap-5">Already have an account? <a href="{{ url_for('signin') }}">Sign In</a></span>
                     </div>
                 </div>
             </div>

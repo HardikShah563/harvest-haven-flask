@@ -101,7 +101,7 @@ cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
 
 def registerAccount(name, gender, email, password): 
     insert_script = '''
-        select u.email from users as u where email = %s
+        select email from users where email = %s
     '''
     insert_values = ([email])
     cur.execute(insert_script, insert_values)
@@ -111,7 +111,7 @@ def registerAccount(name, gender, email, password):
 
     insert_script = '''
         insert into users (u_id, username, gender, email, passcode) 
-        values (NEXTVAL('user_seq_no'), %s, %s, %s)
+        values (NEXTVAL('user_seq_no'), %s, %s, %s, %s)
     '''
     insert_values = (name, gender, email, password)
     cur.execute(insert_script, insert_values)
