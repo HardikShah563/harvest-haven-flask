@@ -173,11 +173,31 @@ def adminCheck(email):
 
 # -------------------------------------------------------
 
-
+def getCategories(): 
+    get_script = '''
+        select c_name from category
+    '''
+    cur.execute(get_script)
+    conn.commit()
+    data = cur.fetchall()
+    categories = []
+    for category in data: 
+        categories.append(category[0])
+    return categories
 
 # -------------------------------------------------------
 
-
+def getCategoryID(): 
+    get_script = '''
+        select c_id from category
+    '''
+    cur.execute(get_script)
+    conn.commit()
+    data = cur.fetchall()
+    categoryIDs = []
+    for id in data: 
+        categoryIDs.append(id[0])
+    return categoryIDs
 
 # -------------------------------------------------------
 

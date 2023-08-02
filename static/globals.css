@@ -72,6 +72,10 @@ html {
     font-size: 36px;
 }
 
+.mb-20 {
+    margin-block: 20px;
+}
+
 .txt-ctr {
     text-align: center;
 }

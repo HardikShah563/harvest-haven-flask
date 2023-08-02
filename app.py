@@ -74,7 +74,10 @@ def signup():
 
 @app.route('/store')
 def store(): 
-    return render_template('store.html', session = session)
+    categories = getCategories()
+    categoryIDs = getCategoryID()
+    
+    return render_template('store.html', categories = categories, categoryIDs = categoryIDs, session = session)
 
 # -------------------------------------------------------
 
@@ -142,6 +145,20 @@ def deleteCategory():
 def signout(): 
     destroySession()
     return redirect("/")
+
+# -------------------------------------------------------
+
+def updateCart(p_id, action): 
+    flag = True
+    for key in session['cart'].keys(): 
+        if key == p_id: 
+            if action == 'plsu':
+                key[p_id] += 1
+            if action == 'minus': 
+                key[p_id] -= 1
+            flag = False
+    if flag: 
+        session['cart'][p_id] = 1
 
 # -------------------------------------------------------
 

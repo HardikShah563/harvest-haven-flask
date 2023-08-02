@@ -31,15 +31,13 @@
             </div>
         </div>
 
-        <h1 class="title txt-ctr">LOOSE PRODUCTS</h1>
-
-        <div class="store" id="loose-store"></div>
-
-        <br><br><br><br>
-
-        <h1 class="title txt-ctr">PACKAGED PRODUCTS</h1>
-
-        <div class="store" id="packaged-store"></div>
+        {% for i in range(categories|length) %}
+            <h1 class="title txt-ctr mb-20">{{categories[i]|upper()}} PRODUCTS</h1>
+            
+            <div class="store" id="store">
+                <!-- products for loop -->
+            </div>
+        {% endfor %}
 
         <a href="./cart.html" class="black-btn">GO TO CART</a>
     </div>
