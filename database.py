@@ -201,11 +201,41 @@ def getCategoryID():
 
 # -------------------------------------------------------
 
-
+def getItems(c_id): 
+    get_script = '''
+        select * from products where c_id = %s
+    '''
+    get_values = ([c_id])
+    cur.execute(get_script, get_values)
+    conn.commit()
+    products = cur.fetchall()
+    return products
 
 # -------------------------------------------------------
 
+def createCategory(c_name): 
+    create_script = '''
+        insert into category (c_id, c_name) 
+        values (NEXTVAL('category_seq_no'), %s)
+    '''
+    create_values = ([c_name])
+    cur.execute(create_script, create_values)
+    if(conn.commit()): 
+        return True
 
+# -------------------------------------------------------
+
+def createItem(p_name, p_qty, p_price, p_img, p_stock_qty, c_id): 
+    create_script = '''
+        insert into products 
+        values (NEXTVAL('product_seq_no'), %s, %s, %s, %s, %s, %s)
+    '''
+    create_values = (p_name, p_qty, p_price, p_img, p_stock_qty, c_id)
+    cur.execute(create_script, create_values)
+    if (conn.commit()): 
+        return True
+    else: 
+        return False
 
 # -------------------------------------------------------
 
