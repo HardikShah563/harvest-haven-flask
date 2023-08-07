@@ -96,7 +96,10 @@ def checkout():
 
 @app.route('/admin-dashboard')
 def adminDashboard(): 
-    return render_template('adminDashboard.html', session = session)
+    categories = getCategories()
+    categoryIDs = getCategoryID()
+    getAllItemsFromDB()
+    return render_template('adminDashboard.html', categories = categories, categoryIDs = categoryIDs, session = session)
 
 # -------------------------------------------------------
 
