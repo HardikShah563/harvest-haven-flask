@@ -97,8 +97,8 @@ def checkout():
 def adminDashboard(): 
     categories = getCategories()
     categoryIDs = getCategoryID()
-    getAllItemsFromDB()
-    return render_template('adminDashboard.html', categories = categories, categoryIDs = categoryIDs, session = session)
+    allItems = getAllItemsFromDB()
+    return render_template('adminDashboard.html', categories = categories, categoryIDs = categoryIDs, allItems = allItems, session = session)
 
 # -------------------------------------------------------
 
@@ -123,16 +123,15 @@ def addItem():
         pImg = request.files['p_img'].read()
         cID = request.form['c_id']
 
-
         msg = putItems(pName, pQty, pPrice, pStockQty, pImg, cID)
         print(msg)
         if(msg == None): 
             msgColor = "green"
-            msgText = "Success!"
+            msgText = "New Item Created!"
 
         else: 
             msgColor = "red"
-            msgText = "Failure!"
+            msgText = "Failed to create item, try again!"
     
     return render_template('addItem.html', msgColor = msgColor, msg = msgText, categories = categories, categoryIDs = categoryIDs, session = session)
 

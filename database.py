@@ -231,7 +231,7 @@ def getCategoryById(c_id):
     cur.execute(get_script, get_values)
     conn.commit()
     data = cur.fetchall()
-    return data
+    return data[0]
 
 # -------------------------------------------------------
 
@@ -254,24 +254,15 @@ def getAllItemsFromDB():
     cur.execute(get_script)
     conn.commit()
     data = cur.fetchall()
-    print(data)
 
+    allProductsInTheStore = {}
     for product in data: 
-        if allProductsInTheStore[product]: 
-            allProductsInTheStore[product].append(product[:-1])
+        id = getCategoryById(product[6])[0]
+        if id not in allProductsInTheStore.keys(): 
+            allProductsInTheStore[id] = []
         else: 
-            allProductsInTheStore[product] = []
+            allProductsInTheStore[id].append(product[:-1])
 
-    # categories = getCategoryID()
-    # for category in categories: 
-    #     get_script = '''
-    #         select * from products where c_id = %s
-    #     '''
-    #     get_values = ([category])
-    #     cur.execute(get_script, get_values)
-    #     conn.commit()
-    #     data = cur.fetchall()
-    #     allItems[getCategoryById(category)] = data
     return allProductsInTheStore
 
 # -------------------------------------------------------
