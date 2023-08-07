@@ -14,7 +14,6 @@ Session(app)
 
 @app.route('/')
 def home(): 
-    # print(hashlib.sha256("Mayuri@563".encode('utf-8')).hexdigest())
     return render_template('home.html', session = session)
 
 @app.route('/signin', methods=["POST", "GET"])
@@ -109,39 +108,133 @@ def adminStats():
 
 # -------------------------------------------------------
 
-@app.route('/add-item')
+@app.route('/add-item', methods=["GET", "POST"])
 def addItem(): 
-    return render_template('addItem.html', session = session)
+    msgColor = ""
+    msgText = ""
+    categories = getCategories()
+    categoryIDs = getCategoryID()
 
+    if request.method == 'POST': 
+        pName = request.form['p_name']
+        pQty = request.form['p_qty']
+        pPrice = request.form['p_price']
+        pStockQty = request.form['p_stock_qty']
+        pImg = request.files['p_img'].read()
+        cID = request.form['c_id']
+
+
+        msg = putItems(pName, pQty, pPrice, pStockQty, pImg, cID)
+        print(msg)
+        if(msg == None): 
+            msgColor = "green"
+            msgText = "Success!"
+
+        else: 
+            msgColor = "red"
+            msgText = "Failure!"
+    
+    return render_template('addItem.html', msgColor = msgColor, msg = msgText, categories = categories, categoryIDs = categoryIDs, session = session)
+
+
+# select * from products
+
+# drop table products
+
+# create table products (
+# 	p_id integer NOT NULL, 
+# 	p_name varchar(100) NOT NULL, 
+# 	p_qty integer NOT NULL, 
+# 	p_price integer NOT NULL, 
+# 	p_img float NOT NULL, 
+# 	c_id integer NOT NULL, 
+# 	PRIMARY KEY (p_id), 
+# 	FOREIGN KEY (c_id) REFERENCES category
+# )
 # -------------------------------------------------------
 
 @app.route('/edit-item')
 def editItem(): 
-    return render_template('editItem.html', session = session)
+    msgColor = ""
+    msgText = ""
+    msg = ""
+
+    if(msg == None): 
+        msgColor = "green"
+        msgText = "Success!"
+
+    else: 
+        msgColor = "red"
+        msgText = "Reject!"
+    return render_template('editItem.html', msgColor = msgColor, msg = msgText, session = session)
 
 # -------------------------------------------------------
 
 @app.route('/delete-item')
 def deleteItem(): 
-    return render_template('deleteItem.html', session = session)
+    msgColor = ""
+    msgText = ""
+    msg = ""
+
+    if(msg == None): 
+        msgColor = "green"
+        msgText = "Success!"
+
+    else: 
+        msgColor = "red"
+        msgText = "Reject!"
+    return render_template('deleteItem.html', msgColor = msgColor, msg = msgText, session = session)
 
 # -------------------------------------------------------
 
 @app.route('/add-category')
 def addCategory(): 
-    return render_template('addCategory.html', session = session)
+    msgColor = ""
+    msgText = ""
+    msg = ""
+
+    if(msg == None): 
+        msgColor = "green"
+        msgText = "Success!"
+
+    else: 
+        msgColor = "red"
+        msgText = "Reject!"
+    return render_template('addCategory.html', msgColor = msgColor, msg = msgText, session = session)
 
 # -------------------------------------------------------
 
 @app.route('/edit-category')
 def editCategory(): 
-    return render_template('editCategory.html', session = session)
+    msgColor = ""
+    msgText = ""
+    msg = ""
+
+    if(msg == None): 
+        msgColor = "green"
+        msgText = "Success!"
+
+    else: 
+        msgColor = "red"
+        msgText = "Reject!"
+    return render_template('editCategory.html', msgColor = msgColor, msg = msgText, session = session)
 
 # -------------------------------------------------------
 
 @app.route('/delete-category')
 def deleteCategory(): 
-    return render_template('deleteCategory.html', session = session)
+    msgColor = ""
+    msgText = ""
+    msg = ""
+
+    if(msg == None): 
+        msgColor = "green"
+        msgText = "Success!"
+
+    else: 
+        msgColor = "red"
+        msgText = "Reject!"
+    return render_template('deleteCategory.html', msgColor = msgColor, msg = msgText, session = session)
 
 # -------------------------------------------------------
 

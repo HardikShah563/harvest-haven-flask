@@ -22,78 +22,98 @@ cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
 
 allProductsInTheStore = {}
 
-# create_script = '''
-#     create table if not exists users (
-#         u_id integer not null, 
-#         username varchar(100) not null, 
-#         gender boolean not null, 
-#         email varchar(100) not null, 
-#         passcode varchar(200), 
-#         isAdmin boolean not null default false, 
-#         PRIMARY KEY (u_id)
-#     );
+create_script = '''
+    -- USERS TABLE --
+    create table if not exists users (
+        u_id integer not null, 
+        username varchar(100) not null, 
+        gender boolean not null, 
+        email varchar(100) not null, 
+        passcode varchar(200), 
+        isAdmin boolean not null default false, 
+        PRIMARY KEY (u_id)
+    );
 
-#     create table if not exists category (
-#         c_id integer not null, 
-#         c_name varchar(100) not null, 
-#         PRIMARY KEY (c_id)
-#     );
+    -- CATEGORY TABLE --
+    create table if not exists category (
+        c_id integer not null, 
+        c_name varchar(100) not null, 
+        PRIMARY KEY (c_id)
+    );
 
-#     create table if not exists shop_items (
-#         s_id integer not null, 
-#         s_name varchar(100) not null, 
-#         s_pack_qty varchar(50), 
-#         s_price float not null, 
-#         s_stock_qty integer not null, 
-#         c_id integer not null, 
-#         FORIEGN KEY (c_id) REFERENCES category (c_id)
-#     );
+    -- PRODUCTS TABLE --
+    create table if not exists products (
+        p_id integer not null, 
+        p_name varchar(100) not null, 
+        p_qty varchar(50) not null, 
+        p_price float not null, 
+        p_stock_qty integer not null, 
+        p_img bytea not null, 
+        c_id integer not null, 
+        PRIMARY KEY (p_id), 
+        FOREIGN KEY (c_id) REFERENCES category (c_id)
+    );
 
-#     create table if not exists orders (
-#         o_id integer not null, 
-#         u_id integer not null, 
-#         name varchar(100) not null, 
-#         email varchar(100) not null, 
-#         addr varchar(200) not null, 
-#         city varchar(50) not null, 
-#         state varchar(50) not null, 
-#         zip integer not null, 
-#         order_total float not null, 
-#         purchase varchar(200) not null, 
-#         PRIMARY KEY (o_id), 
-#         FORIEGN KEY (u_id) REFERENCES users (u_id)
-#     );
+    -- ORDERS TABLE --
+    create table if not exists orders (
+        o_id integer not null, 
+        u_id integer not null, 
+        username varchar(100) not null, 
+        email varchar(100) not null, 
+        addr varchar(200) not null, 
+        city varchar(50) not null, 
+        state_province_ut varchar(50) not null, 
+        zip integer not null, 
+        order_total float not null, 
+        purchase jsonb not null, 
+        PRIMARY KEY (o_id), 
+        FOREIGN KEY (u_id) REFERENCES users (u_id)
+    );
 
-#     create sequence if not exists public.user_seq_no
-#         increment 1
-#         start 1
-#         minvalue 1
-#         maxvalue 99999
-#         owned by users.u_id;
+    -- USER_SEQ_NO SEQUENCE --
+    create sequence if not exists public.user_seq_no
+        increment 1
+        start 1
+        minvalue 1
+        maxvalue 99999
+        owned by users.u_id;
 
-#     alter sequence public.user_seq_no
-#         owner to postgres;
+    alter sequence public.user_seq_no
+        owner to postgres;
 
-#     create sequence if not exists public.category_seq_no
-#         increment 1
-#         start 1
-#         minvalue 1
-#         maxvalue 99999
-#         owned by category.c_id;
+    -- CATEGORY_SEQ_NO SEQUENCE --
+    create sequence if not exists public.category_seq_no
+        increment 1
+        start 1
+        minvalue 1
+        maxvalue 99999
+        owned by category.c_id;
 
-#     alter sequence public.category_seq_no
-#         owner to postgres;
+    alter sequence public.category_seq_no
+        owner to postgres;
 
-#     create sequence if not exists public.order_seq_no
-#         increment 1
-#         start 1
-#         minvalue 1
-#         maxvalue 99999
-#         owned by booking.booking_id;
+    -- PRODUCT_SEQ_NO SEQUENCE --
+    create sequence if not exists public.product_seq_no
+        increment 1
+        start 1
+        minvalue 1
+        maxvalue 99999
+        owned by products.p_id;
 
-#     alter sequence public.order_seq_no
-#         owner to postgres;
-# '''
+    alter sequence public.product_seq_no
+        owner to postgres;
+
+    -- ORDER_SEQ_NO SEQUENCE --
+    create sequence if not exists public.order_seq_no
+        increment 1
+        start 1
+        minvalue 1
+        maxvalue 99999
+        owned by booking.booking_id;
+
+    alter sequence public.order_seq_no
+        owner to postgres;
+'''
 # # gender - true is male and false is female
 # # card details wont be save therefore did not make columns for that
 # cur.execute(create_script)
@@ -210,7 +230,19 @@ def getCategoryById(c_id):
     get_values = ([c_id])
     cur.execute(get_script, get_values)
     conn.commit()
-    data = cur.fetchone()
+    data = cur.fetchall()
+    return data
+
+# -------------------------------------------------------
+
+def getCategoryIdFromName(c_name): 
+    get_script = '''
+        select c_id from category where c_name = %s
+    '''
+    get_values = ([c_name])
+    cur.execute(get_script, get_values)
+    conn.commit()
+    data = cur.fetchall()
     return data
 
 # -------------------------------------------------------
@@ -249,7 +281,26 @@ def getAllItems():
 
 # -------------------------------------------------------
 
+def putItems(pName, pQty, pPrice, pStockQty, pImg, cID):     
+    insert_script = '''
+        insert into products (p_id, p_name, p_qty, p_price, p_stock_qty, p_img, c_id)
+        values (NEXTVAL('product_seq_no'), %s, %s, %s, %s, %s, %s)
+    '''
+    insert_values = (pName, pQty, pPrice, pStockQty, pImg, cID)
+    cur.execute(insert_script, insert_values)
+    if(conn.commit()): 
+       return True
 
+# -------------------------------------------------------
+
+def checkout(): 
+    # CREATE TABLE thetable (
+    #     uuid TEXT,
+    #     dict JSONB
+    # );
+    # cur.execute('INSERT into thetable (uuid, dict) values (%s, %s)',
+    # ['testName', Json({'id':'122','name':'test','number':'444-444-4444'})])
+    return False
 # -------------------------------------------------------
 
 
@@ -264,7 +315,9 @@ def getAllItems():
 
 # -------------------------------------------------------
 
-
-
+def setShopItemsAndCategories():
+    getCategories()
+    getCategoryID()
+    getAllItemsFromDB()
 # -------------------------------------------------------
 
