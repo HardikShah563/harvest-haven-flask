@@ -64,7 +64,7 @@ def signup():
             msgText = "Email Already exists! Log in if you have an account!"
 
         setSession(getUID(email), name, email, adminCheck(email))
-        session['cart'] = {}
+    
     # if the user has already logged in, he/she cannot visit the login/registeration page
     if session['u_id']: 
         return redirect("/")
@@ -84,21 +84,19 @@ def store():
 
 @app.route('/cart')
 def cart(): 
-    return render_template('cart.html', cartItems = session['cart'], session = session)
+    return render_template('cart.html', session = session)
 
 # -------------------------------------------------------
 
 @app.route('/checkout')
 def checkout(): 
-    return render_template('checkout.html', cartItems = session['cart'], session = session)
+    return render_template('checkout.html', session = session)
 
 # -------------------------------------------------------
 
 @app.route('/admin-dashboard')
 def adminDashboard(): 
-    categories = getCategories()
-    categoryIDs = getCategoryID()
-    return render_template('adminDashboard.html', categories = categories, categoryIDs = categoryIDs, session = session)
+    return render_template('adminDashboard.html', session = session)
 
 # -------------------------------------------------------
 
@@ -126,24 +124,9 @@ def deleteItem():
 
 # -------------------------------------------------------
 
-@app.route('/add-category', methods=["GET", "POST"])
+@app.route('/add-category')
 def addCategory(): 
-    msg = ""
-    msgText = ""
-    msgColor = ""
-    if request.method == "POST": 
-        c_name = request.form['c_name']
-        msg = createCategory(c_name)
-        print(msg)
-        if(msg == None): 
-            msgColor = "green"
-            msgText = "New Category Registered!"
-
-        else: 
-            msgColor = "red"
-            msgText = "Category wasn't created!"
-    
-    return render_template('addCategory.html', msgColor = msgColor, msg = msgText, session = session)
+    return render_template('addCategory.html', session = session)
 
 # -------------------------------------------------------
 
@@ -195,7 +178,6 @@ def destroySession():
     session["name"] = None
     session["email"] = None
     session["isAdmin"] = None
-    session['cart'] = {}
 
 # -------------------------------------------------------
 
