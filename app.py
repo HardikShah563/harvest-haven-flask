@@ -105,9 +105,28 @@ def updateCart(p_id, action):
 
 # -------------------------------------------------------
 
-@app.route('/cart')
+@app.route('/cart', methods=["GET", "POST"])
 def cart(): 
-    return render_template('cart.html', session = session)
+    allItems = getAllItemsFromDB()
+    display_cart = []
+    
+    # for item in allItems:
+    #     for i in allItems[item]:
+    #         if session['cart'][i[0]] > 0: 
+    #             list = i
+    #             list.append(session['cart'][i[0]])
+    #             data = base64.b64encode(i[5])
+    #             i[5] = data.decode()
+    #             display_cart.append(list)
+    display_cart = recalculateDisplayCart(session['cart'])
+    
+    if request.method == "POST": 
+        op = request.form["op"]
+        cart_id = request.form["cart_id"]
+        updateCart(cart_id, op)
+        display_cart = recalculateDisplayCart(session['cart'])
+
+    return render_template('cart.html', display_cart = display_cart, session = session)
 
 # -------------------------------------------------------
 

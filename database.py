@@ -1,5 +1,6 @@
 import psycopg2
 import psycopg2.extras
+import base64
 
 hostname = 'localhost'
 database = 'harvesthaven'
@@ -383,6 +384,22 @@ def initializeCart():
     for item in allItems: 
         cart[item[0]] = 0
     return cart
+
+# -------------------------------------------------------
+
+def recalculateDisplayCart(cart):
+    display_cart = []
+    allItems = getAllItemsFromDB()
+    for item in allItems:
+        for i in allItems[item]:
+            if cart[i[0]] > 0: 
+                list = i
+                list.append(cart[i[0]])
+                data = base64.b64encode(i[5])
+                i[5] = data.decode()
+                display_cart.append(list)
+    return display_cart
+
 # -------------------------------------------------------
 
 def checkout(): 

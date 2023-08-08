@@ -23,83 +23,58 @@
     <div class="page">
         <h1 class="title txt-ctr">CART</h1>
 
-        <div class="store" id="cart-items">
-        </div>
-
-        <a href="./checkout.html" class="black-btn">PLACE ORDER</a>
-    </div>
-</body>
-
-<script>
-    cart = [{
-    name: "SACK OF ONION",
-    qty: "1kg",
-    price: 54.99,
-    type: "loose",
-    url: "onions"
-}, {
-    name: "CORN",
-    qty: "1 full",
-    price: 18.49,
-    type: "loose",
-    url: "corn"
-}, {
-    name: "MILK",
-    qty: "500ml",
-    price: 54.49,
-    type: "packaged",
-    url: "milk"
-}, {
-    name: "FROZEN GREEN PEAS",
-    qty: "500g",
-    price: 129.99,
-    type: "packaged",
-    url: "peas"
-}, {
-    name: "CEREALS",
-    qty: "250g",
-    price: 63.49,
-    type: "packaged",
-    url: "cereals"
-}];
-
-let emptyDiv3 = document.getElementById("cart-items");
-
-function cartItems() {
-    for (let i = cart.length - 1; i >= 0; i--) {
-        let newCartItem = `
+        <div class="store" id="store">
+            
+            {% for cartitem in display_cart %}
             <div class="store-item">
                 <div class="flex">
                     <div class="store-item-img">
-                        <img src="./assets/${cart[i].url}.png" alt="store-item">
+                        <img src="data:image/png;base64,{{ cartitem[5] }}" alt="store-item">
                     </div>
                     
                     <div class="store-item-text">
                         <p class="store-item-title">
-                        ${cart[i].name} (${cart[i].qty})
+                        {{cartitem[1]}} {{cartitem[2]}}
                         </p>
                         <p class="store-item-price">
-                            ₹${cart[i].price}
+                            ₹{{cartitem[3]}}
                         </p>
                     </div>
                 </div>
         
                 <div class="quantity">
-                    <div class="minus">
-                        <i class="fa-solid fa-minus"></i>
-                    </div>
-                    <div class="qty">01</div>
-                    <div class="plus">
-                        <i class="fa-solid fa-plus"></i>
-                    </div>
+                    <form action="{{ url_for('cart') }}" method="post">
+                        <input type="hidden" name="op" value="minus">
+                        <input type="hidden" name="cart_id" value="{{cartitem[0]}}">
+                        <button class="minus" type="submit">
+                            <i class="fa-solid fa-minus"></i>
+                        </button>
+                    </form>
+
+                    <input 
+                        type="number" 
+                        name="qty" 
+                        id="qty" 
+                        min="0" 
+                        value="{{ cartitem[6] }}" 
+                        class="qty"
+                        readonly
+                    >
+
+                    <form action="{{ url_for('cart') }}" method="post">
+                        <input type="hidden" name="op" value="plus">
+                        <input type="hidden" name="cart_id" value="{{cartitem[0]}}">
+                        <button class="plus" type="submit">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
-        `;
-        emptyDiv3.insertAdjacentHTML("afterbegin", newCartItem);
-    }
-}
+            {% endfor %}
+        </div>
 
-cartItems();
-</script>
+        <a href="./checkout.html" class="black-btn">PLACE ORDER</a>
+    </div>
+</body>
 
 </html>
