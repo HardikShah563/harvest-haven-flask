@@ -27,24 +27,24 @@
                 <h1 class="title">Add A New Category</h1>
                 <h1 class="subtitle">A new category won't be created if one already exists</h1>
 
-                <form action="?" method="post">
+                <form action="{{ url_for('addCategory') }}" method="post">
                     <div class="input-box">
-                        <div class="input msg" id="red">
-                            Category Already Exisits!
+                        <div class="input msg" id="{{msgColor}}">
+                            {{msg}}
                         </div>
                     </div>
 
                     <div class="input-box">
                         <label 
-                            for="name">
+                            for="c_name">
                             New Category Name: 
                         </label>
 
                         <input 
                             class="input"
                             type="text" 
-                            name="spices" 
-                            id="spices" 
+                            name="c_name" 
+                            id="c_name" 
                             placeholder="Eg: Spices"
                             autocomplete="off"
                             required

@@ -22,6 +22,7 @@ cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
 
 allProductsInTheStore = {}
 
+
 create_script = '''
     -- USERS TABLE --
     create table if not exists users (
@@ -206,7 +207,7 @@ def getCategories():
     for category in data: 
         categories.append(category[0])
     return categories
-
+ 
 # -------------------------------------------------------
 
 def getCategoryID(): 
@@ -247,6 +248,18 @@ def getCategoryIdFromName(c_name):
 
 # -------------------------------------------------------
 
+def addNewCategory(c_name):
+    add_script = '''
+        insert into category
+        values (NEXTVAL('category_seq_no'), %s)
+    '''
+    add_values = ([c_name])
+    cur.execute(add_script, add_values)
+    if (conn.commit()):
+        return True
+
+# -------------------------------------------------------
+
 def editCategoryName(old_id, new_name):
     edit_script = '''
         update category
@@ -274,6 +287,13 @@ def deleteCategoryCompletely(c_id):
 # -------------------------------------------------------
 
 def getAllItemsFromDB():
+    allProductsInTheStore = {}
+
+    categoryList = getCategories()
+    for category in categoryList: 
+        allProductsInTheStore[category] = []
+    print(allProductsInTheStore)
+
     get_script = '''
         select * from products
     '''
@@ -281,13 +301,9 @@ def getAllItemsFromDB():
     conn.commit()
     data = cur.fetchall()
 
-    allProductsInTheStore = {}
     for product in data: 
-        id = getCategoryById(product[6])[0]
-        if id not in allProductsInTheStore.keys(): 
-            allProductsInTheStore[id] = []
-        else: 
-            allProductsInTheStore[id].append(product[:-1])
+        c_name = getCategoryById(product[6])[0]
+        allProductsInTheStore[c_name].append(product[:-1])
 
     return allProductsInTheStore
 
@@ -317,6 +333,17 @@ def putItems(pName, pQty, pPrice, pStockQty, pImg, cID):
     '''
     insert_values = (pName, pQty, pPrice, pStockQty, pImg, cID)
     cur.execute(insert_script, insert_values)
+    conn.commit()
+    get_script = '''
+        select * from products where p_name = %s and p_qty = %s
+    '''
+    get_values = (pName, pQty)
+    cur.execute(get_script, get_values)
+    # conn.commit()
+    # data = cur.fetchall()[0]
+    # getAllItemsFromDB()
+    # c_name = getCategoryById(cID)
+    # allProductsInTheStore[c_name[0]].append(data[:-1])
     if(conn.commit()): 
        return True
 
@@ -341,17 +368,6 @@ def checkout():
     # cur.execute('INSERT into thetable (uuid, dict) values (%s, %s)',
     # ['testName', Json({'id':'122','name':'test','number':'444-444-4444'})])
     return False
-# -------------------------------------------------------
-
-
-
-# -------------------------------------------------------
-
-
-
-# -------------------------------------------------------
-
-
 
 # -------------------------------------------------------
 

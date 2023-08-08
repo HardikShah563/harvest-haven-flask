@@ -129,6 +129,7 @@ def addItem():
         if(msg == None): 
             msgColor = "green"
             msgText = "New Item Created!"
+            getAllItemsFromDB()
 
         else: 
             msgColor = "red"
@@ -181,14 +182,17 @@ def addCategory():
     msgColor = ""
     msgText = ""
     msg = ""
+    if request.method == "POST": 
+        c_name = request.form["c_name"]
+        msg = addNewCategory(c_name)    
+        if(msg == None): 
+            msgColor = "green"
+            msgText = "New Category created!"
+            getAllItemsFromDB()
 
-    if(msg == None): 
-        msgColor = "green"
-        msgText = "Success!"
-
-    else: 
-        msgColor = "red"
-        msgText = "Reject!"
+        else: 
+            msgColor = "red"
+            msgText = "Couldn't create new Category!"
     return render_template('addCategory.html', msgColor = msgColor, msg = msgText, session = session)
 
 # -------------------------------------------------------
