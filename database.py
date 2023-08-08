@@ -280,9 +280,8 @@ def deleteCategoryCompletely(c_id):
     '''
     delete_values = (c_id, c_id)
     cur.execute(delete_script, delete_values)
-    print(conn.commit())
-    # if (conn.commit()): 
-    #     return True
+    if (conn.commit()): 
+        return True
 
 # -------------------------------------------------------
 
@@ -346,6 +345,30 @@ def putItems(pName, pQty, pPrice, pStockQty, pImg, cID):
     # allProductsInTheStore[c_name[0]].append(data[:-1])
     if(conn.commit()): 
        return True
+
+# -------------------------------------------------------
+
+def getProductFromID(p_id):
+    get_script = '''
+        select * from products where p_id = %s
+    '''
+    get_values = ([p_id])
+    cur.execute(get_script, get_values)
+    conn.commit()
+    data = cur.fetchall()[0]
+    return data
+
+# -------------------------------------------------------
+
+def editItemDetails(c_id, p_id, new_name, p_qty, p_price, p_stock_qty):
+    edit_script = '''
+        update products 
+        set p_name = %s, p_qty = %s, p_price = %s, p_stock_qty = %s, c_id = %s where p_id = %s
+    '''
+    edit_values = (new_name, p_qty, p_price, p_stock_qty, c_id, p_id)
+    cur.execute(edit_script, edit_values)
+    if (conn.commit()):
+        return True
 
 # -------------------------------------------------------
 

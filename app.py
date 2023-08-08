@@ -139,20 +139,46 @@ def addItem():
 
 # -------------------------------------------------------
 
-@app.route('/edit-item')
+@app.route('/edit-item', methods=["GET", "POST"])
 def editItem(): 
     msgColor = ""
     msgText = ""
     msg = ""
+    categories = getCategories()
+    categoryIDs = getCategoryID()
+    allItems = getAllItemNamesAndIDs()
 
-    if(msg == None): 
-        msgColor = "green"
-        msgText = "Success!"
+    if request.method == 'POST': 
+        p_id = request.form["p_id"]
+        new_name = request.form["new_name"]
+        c_id = request.form["c_id"]
+        p_qty = request.form["p_qty"]
+        p_price = request.form["p_price"]
+        p_stock_qty = request.form["p_stock_qty"]
 
-    else: 
-        msgColor = "red"
-        msgText = "Reject!"
-    return render_template('editItem.html', msgColor = msgColor, msg = msgText, session = session)
+        productDetails = getProductFromID(p_id)
+        print(productDetails)
+        if c_id == None: 
+            c_id = productDetails[6]
+        
+        if p_qty == None:
+            p_qty = productDetails[2]
+
+        if p_stock_qty == None:
+            p_stock_qty = productDetails[4]
+        
+        if p_price == None: 
+            p_price = productDetails[3]
+
+        msg = editItemDetails(c_id, p_id, new_name, p_qty, p_price, p_stock_qty)
+        if(msg == None): 
+            msgColor = "green"
+            msgText = "Product Details updated successfully!"
+
+        else: 
+            msgColor = "red"
+            msgText = "Couldn't edit Product Details!"
+    return render_template('editItem.html', msgColor = msgColor, msg = msgText, categories = categories, allItems = allItems, categoryIDs = categoryIDs, session = session)
 
 # -------------------------------------------------------
 
