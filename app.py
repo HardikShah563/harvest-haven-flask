@@ -144,6 +144,9 @@ def checkout():
         if(msg) == None: 
             msgColor = "green"
             msgText = "Checkout Successful!" 
+            session['cart'] = {}
+            display_cart = {}
+            return redirect("/success")
         else: 
             msgColor = "red"
             msgText = "Couldn't checkout, try again!"
@@ -320,6 +323,14 @@ def deleteCategory():
             msgColor = "red"
             msgText = "Couldn't delete Category!"
     return render_template('deleteCategory.html', msgColor = msgColor, msg = msgText, categories = categories, categoryIDs = categoryIDs, session = session)
+
+# -------------------------------------------------------
+
+@app.route('/success')
+def success():
+    success_title = "Checkout Successful"
+    success_subtitle = "Explore the store"
+    return render_template('success.html', success_title = success_title, success_subtitle = success_subtitle, session = session)
 
 # -------------------------------------------------------
 

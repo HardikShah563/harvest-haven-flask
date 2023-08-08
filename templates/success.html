@@ -1,0 +1,32 @@
+{% from 'navbar.html' import navbar %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Maven</title>
+    <!-- Stylesheet Link -->
+    <link rel="stylesheet" href="./static/globals.css">
+    <link rel="stylesheet" href="./static/checkout.css">
+    <link rel="stylesheet" href="./static/store.css">
+    <link rel="stylesheet" href="./static/form.css">
+    <!-- Script Tag -->
+    <script src="./static/script.js" defer></script>
+    <!-- Icons Link -->
+    <script src="https://kit.fontawesome.com/6d232ec003.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    {{ navbar(session) }}
+
+    <div class="page">
+        <h1 class="title txt-ctr">{{success_title}}</h1>
+        <h1 class="subtitle txt-ctr">{{success_subtitle}}</h1>
+
+        <a href="{{ url_for('store') }}" class="black-btn">EXPLORE STORE</a>
+    </div>
+</body>
+</html>
