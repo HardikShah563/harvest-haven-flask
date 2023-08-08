@@ -247,6 +247,30 @@ def getCategoryIdFromName(c_name):
 
 # -------------------------------------------------------
 
+def editCategoryName(old_name, new_name):
+    edit_script = '''
+        update category
+        set c_name = %s
+        where c_name = %s;
+    '''
+    edit_values = (old_name, new_name)
+    cur.execute()
+    if conn.commit():
+        return True
+
+# -------------------------------------------------------
+
+def deleteCategory(c_id):
+    edit_script = '''
+        delete from category where c_id = %s
+    '''
+    edit_values = ([c_id])
+    cur.execute()
+    if conn.commit(): 
+        return True
+
+# -------------------------------------------------------
+
 def getAllItemsFromDB():
     get_script = '''
         select * from products
@@ -272,6 +296,18 @@ def getAllItems():
 
 # -------------------------------------------------------
 
+def getAllItemNamesAndIDs(): 
+    items = []
+    get_script = '''
+        select p_id, p_name from products
+    '''
+    cur.execute(get_script)
+    conn.commit()
+    data = cur.fetchall()
+    return data
+
+# -------------------------------------------------------
+
 def putItems(pName, pQty, pPrice, pStockQty, pImg, cID):     
     insert_script = '''
         insert into products (p_id, p_name, p_qty, p_price, p_stock_qty, p_img, c_id)
@@ -281,6 +317,17 @@ def putItems(pName, pQty, pPrice, pStockQty, pImg, cID):
     cur.execute(insert_script, insert_values)
     if(conn.commit()): 
        return True
+
+# -------------------------------------------------------
+
+def deleteProduct(p_id):
+    delete_script = '''
+        delete from products where p_id = %s
+    '''
+    delete_value = ([p_id])
+    cur.execute(delete_script, delete_value)
+    if conn.commit(): 
+        return True
 
 # -------------------------------------------------------
 

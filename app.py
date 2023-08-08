@@ -76,8 +76,9 @@ def signup():
 def store(): 
     categories = getCategories()
     categoryIDs = getCategoryID()
+    allItems = getAllItemsFromDB()
     
-    return render_template('store.html', categories = categories, categoryIDs = categoryIDs, session = session)
+    return render_template('store.html', categories = categories, categoryIDs = categoryIDs, allItems = allItems, session = session)
 
 # -------------------------------------------------------
 
@@ -135,21 +136,6 @@ def addItem():
     
     return render_template('addItem.html', msgColor = msgColor, msg = msgText, categories = categories, categoryIDs = categoryIDs, session = session)
 
-
-# select * from products
-
-# drop table products
-
-# create table products (
-# 	p_id integer NOT NULL, 
-# 	p_name varchar(100) NOT NULL, 
-# 	p_qty integer NOT NULL, 
-# 	p_price integer NOT NULL, 
-# 	p_img float NOT NULL, 
-# 	c_id integer NOT NULL, 
-# 	PRIMARY KEY (p_id), 
-# 	FOREIGN KEY (c_id) REFERENCES category
-# )
 # -------------------------------------------------------
 
 @app.route('/edit-item')
@@ -169,20 +155,24 @@ def editItem():
 
 # -------------------------------------------------------
 
-@app.route('/delete-item')
+@app.route('/delete-item', methods=["GET", "POST"])
 def deleteItem(): 
     msgColor = ""
     msgText = ""
     msg = ""
+    allItems = getAllItemNamesAndIDs()
+    if request.method == "POST": 
+        p_id = request.form["p_id"]
+        msg = deleteProduct(p_id)
+        print(msg)
+        if(msg == None): 
+            msgColor = "green"
+            msgText = "Product successfully deleted!"
 
-    if(msg == None): 
-        msgColor = "green"
-        msgText = "Success!"
-
-    else: 
-        msgColor = "red"
-        msgText = "Reject!"
-    return render_template('deleteItem.html', msgColor = msgColor, msg = msgText, session = session)
+        else: 
+            msgColor = "red"
+            msgText = "Failed to delete the product!"
+    return render_template('deleteItem.html', msgColor = msgColor, msg = msgText, allItems = allItems, session = session)
 
 # -------------------------------------------------------
 
