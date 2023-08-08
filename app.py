@@ -6,6 +6,7 @@ import psycopg2
 import psycopg2.extras
 from database import *
 import hashlib
+import base64
 
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
@@ -77,6 +78,11 @@ def store():
     categories = getCategories()
     categoryIDs = getCategoryID()
     allItems = getAllItemsFromDB()
+    print(allItems)
+    for category in categories: 
+        for items in allItems[category]:
+            data = base64.b64encode(items[5])
+            items[5] = data.decode()
     
     return render_template('store.html', categories = categories, categoryIDs = categoryIDs, allItems = allItems, session = session)
 
