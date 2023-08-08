@@ -1,6 +1,7 @@
 import psycopg2
 import psycopg2.extras
 import base64
+import json
 
 hostname = 'localhost'
 database = 'harvesthaven'
@@ -402,27 +403,26 @@ def recalculateDisplayCart(cart):
 
 # -------------------------------------------------------
 
-def checkoutPurchase(fullName, email, address, city, state, zip, cardName, cardNo, cardExp, cardCVV, cartDict): 
-    # creating purchase dict from session['cart']
+def createPurchaseJSON(cart):
     purchase = {}
-    for item in cartDict:
-        print(item)
-        if item[1] > 0: 
-            purchase[item[0]] = item[1]
+    for item in cart:
+        if (cart[item] > 0):
+            purchase[item] = cart[item]
     
-    # insert_script = ''''''
-    # insert_values = ()
-    # cur.execute(insert_script, insert_values)
-    # if (conn.commit()):
-    #     return True
+    return json.dumps(purchase)
 
-    # CREATE TABLE thetable (
-    #     uuid TEXT,
-    #     dict JSONB
-    # );
-    # cur.execute('INSERT into thetable (uuid, dict) values (%s, %s)',
-    # ['testName', Json({'id':'122','name':'test','number':'444-444-4444'})])
-    return False
+# -------------------------------------------------------
+
+def checkoutPurchase(u_id, fullName, email, address, city, state, zip, total, cart): 
+    purchase = createPurchaseJSON(cart)
+    insert_script = '''
+        insert into orders (o_id, u_id, username, email, addr, city, state_province_ut, zip, order_total, purchase)
+        values (NEXTVAL('order_seq_no'), %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    '''
+    insert_values = (u_id, fullName, email, address, city, state, zip, total, purchase)
+    cur.execute(insert_script, insert_values)
+    if (conn.commit()):
+        return True
 
 # -------------------------------------------------------
 

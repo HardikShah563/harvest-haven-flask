@@ -130,6 +130,8 @@ def checkout():
     total.append(calcGST(total[0]))
     total.append(total[0] + (total[1] * 2))
 
+    createPurchaseJSON(session['cart'])
+
     if request.method == "POST": 
         fullName = request.form["fullname"]
         email = request.form["email"]
@@ -137,13 +139,9 @@ def checkout():
         city = request.form["city"]
         state = request.form["state"]
         zip = request.form["zip"]
-        cardName = request.form["card-name"]
-        cardNo = request.form["card-no"]
-        cardExp = request.form["card-exp"]
-        cardCVV = request.form["card-cvv"]
 
-        msg = checkoutPurchase(fullName, email, address, city, state, zip, cardName, cardNo, cardExp, cardCVV, session['cart'])
-        if(msg): 
+        msg = checkoutPurchase(session['u_id'], fullName, email, address, city, state, zip, total[3], session['cart'])
+        if(msg) == None: 
             msgColor = "green"
             msgText = "Checkout Successful!" 
         else: 
