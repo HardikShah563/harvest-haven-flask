@@ -402,7 +402,20 @@ def recalculateDisplayCart(cart):
 
 # -------------------------------------------------------
 
-def checkout(): 
+def checkoutPurchase(fullName, email, address, city, state, zip, cardName, cardNo, cardExp, cardCVV, cartDict): 
+    # creating purchase dict from session['cart']
+    purchase = {}
+    for item in cartDict:
+        print(item)
+        if item[1] > 0: 
+            purchase[item[0]] = item[1]
+    
+    # insert_script = ''''''
+    # insert_values = ()
+    # cur.execute(insert_script, insert_values)
+    # if (conn.commit()):
+    #     return True
+
     # CREATE TABLE thetable (
     #     uuid TEXT,
     #     dict JSONB
@@ -410,6 +423,19 @@ def checkout():
     # cur.execute('INSERT into thetable (uuid, dict) values (%s, %s)',
     # ['testName', Json({'id':'122','name':'test','number':'444-444-4444'})])
     return False
+
+# -------------------------------------------------------
+
+def calcTotal(cart): 
+    total = 0
+    for cart_item in cart: 
+        total = total + (cart_item[3] * cart_item[6])
+    return total
+
+# -------------------------------------------------------
+
+def calcGST(total):
+    return 0.09 * total
 
 # -------------------------------------------------------
 

@@ -31,12 +31,12 @@
 
                 <form action="?" method="post">
                     <div class="input-box">
-                        <div class="input msg" id="red">
-                            Email Already Exists!
+                        <div class="input msg" id="{{msgColor}}">
+                            {{msg}}
                         </div>
                     </div>
 
-                    <h1 class="title">Personal Details</h1>
+                    <h1 class="title">Billing Details:</h1>
 
                     <div class="input-box">
                         <label 
@@ -140,7 +140,7 @@
                         >
                     </div>
 
-                    <h1 class="title">Payment Details</h1>
+                    <h1 class="title">Payment Details:</h1>
                     <h1 class="subtitle">Accepted Cards</h1>
                     <h1 class="flex gap-5 title">
                         <i class="fa fa-cc-visa" id="navy-card"></i>
@@ -216,18 +216,6 @@
                         >
                     </div>
 
-                    <div class="input-box flex gap-5 cur">
-                        <input 
-                            class="cur"
-                            type="checkbox" 
-                            name="billing-addr" 
-                            id="billing-addr"
-                            checked
-                            required
-                        >
-                        <label class="cur" for="billing-addr">Shipping Address Same as Billing Address</label>
-                    </div>
-
                     <div class="input-box">
                         <button 
                             class="form-btn"
@@ -241,94 +229,55 @@
 
             <div class="checkout-store">
                 <h1 class="title">Cart Items</h1>
-                <div class="store" id="cart-items"></div>
+
+                <div class="store" id="cart-items">
+
+                    {% for cartitem in display_cart %}
+                    <div class="store-item">
+                        <div class="flex">
+                            <div class="store-item-img">
+                                <img src="data:image/png;base64,{{ cartitem[5] }}" alt="store-item">
+                            </div>
+                            
+                            <div class="store-item-text">
+                                <p class="store-item-title">
+                                {{cartitem[1]}} {{cartitem[2]}}
+                                </p>
+                                <p class="store-item-price">
+                                    ₹{{cartitem[3]}}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="quantity">
+                            <div class="qty">{{ cartitem[6] }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
                 <br>
                 <hr>
                 <div class="checkout-total flex">
-                    <h1 class="subtitle">Subtotal: </h1>
-                    <h1 class="subtitle">₹499.99</h1>
+                    <h1 class="subtitle">Subtotal&emsp;&nbsp;: </h1>
+                    <h1 class="subtitle">₹{{total[0]}}</h1>
                 </div>
                 <div class="checkout-total flex">
-                    <h1 class="subtitle">CGST: </h1>
-                    <h1 class="subtitle">₹24.99</h1>
+                    <h1 class="subtitle">CGST (9%)&nbsp;&nbsp;&nbsp;: </h1>
+                    <h1 class="subtitle">₹{{total[1]}}</h1>
                 </div>
                 <div class="checkout-total flex">
-                    <h1 class="subtitle">SGST: </h1>
-                    <h1 class="subtitle">₹24.99</h1>
+                    <h1 class="subtitle">SGST (9%)&nbsp;&nbsp;&nbsp;: </h1>
+                    <h1 class="subtitle">₹{{total[2]}}</h1>
                 </div>
                 <hr>
                 <div class="checkout-total flex">
                     <h1 class="title">Grand Total: </h1>
-                    <h1 class="title">₹549.97</h1>
+                    <h1 class="title">₹{{total[3]}}</h1>
                 </div>
             </div>
         </div>
     </div>
 </body>
-<script>
-    cart = [{
-        name: "SACK OF ONION",
-        qty: "1kg",
-        price: 54.99,
-        type: "loose",
-        url: "onions"
-    }, {
-        name: "CORN",
-        qty: "1 full",
-        price: 18.49,
-        type: "loose",
-        url: "corn"
-    }, {
-        name: "MILK",
-        qty: "500ml",
-        price: 54.49,
-        type: "packaged",
-        url: "milk"
-    }, {
-        name: "FROZEN GREEN PEAS",
-        qty: "500g",
-        price: 129.99,
-        type: "packaged",
-        url: "peas"
-    }, {
-        name: "CEREALS",
-        qty: "250g",
-        price: 63.49,
-        type: "packaged",
-        url: "cereals"
-    }];
-
-    let emptyDiv3 = document.getElementById("cart-items");
-
-    function cartItems() {
-        for (let i = cart.length - 1; i >= 0; i--) {
-            let newCartItem = `
-            <div class="store-item">
-                <div class="flex">
-                    <div class="store-item-img">
-                        <img src="./assets/${cart[i].url}.png" alt="store-item">
-                    </div>
-                    
-                    <div class="store-item-text">
-                        <p class="store-item-title">
-                        ${cart[i].name} (${cart[i].qty})
-                        </p>
-                        <p class="store-item-price">
-                            ₹${cart[i].price}
-                        </p>
-                    </div>
-                </div>
-        
-                <div class="quantity">
-                    <div class="qty">x 01</div>
-                </div>
-            </div>
-        `;
-            emptyDiv3.insertAdjacentHTML("afterbegin", newCartItem);
-        }
-    }
-
-    cartItems();
-</script>
 
 </html>

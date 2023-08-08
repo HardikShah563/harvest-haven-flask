@@ -87,7 +87,6 @@ def store():
         p_id = request.form["p_id"]
         updateCart(p_id, op)
 
-
     return render_template('store.html', categories = categories, categoryIDs = categoryIDs, allItems = allItems, session = session)
 # -------------------------------------------------------
 
@@ -108,16 +107,6 @@ def updateCart(p_id, action):
 @app.route('/cart', methods=["GET", "POST"])
 def cart(): 
     allItems = getAllItemsFromDB()
-    display_cart = []
-    
-    # for item in allItems:
-    #     for i in allItems[item]:
-    #         if session['cart'][i[0]] > 0: 
-    #             list = i
-    #             list.append(session['cart'][i[0]])
-    #             data = base64.b64encode(i[5])
-    #             i[5] = data.decode()
-    #             display_cart.append(list)
     display_cart = recalculateDisplayCart(session['cart'])
     
     if request.method == "POST": 
@@ -130,9 +119,38 @@ def cart():
 
 # -------------------------------------------------------
 
-@app.route('/checkout')
+@app.route('/checkout', methods=["GET", "POST"])
 def checkout(): 
-    return render_template('checkout.html', session = session)
+    msgColor = ""
+    msgText = ""
+    display_cart = recalculateDisplayCart(session['cart'])
+    total = []
+    total.append(calcTotal(display_cart))
+    total.append(calcGST(total[0]))
+    total.append(calcGST(total[0]))
+    total.append(total[0] + (total[1] * 2))
+
+    if request.method == "POST": 
+        fullName = request.form["fullname"]
+        email = request.form["email"]
+        address = request.form["address"]
+        city = request.form["city"]
+        state = request.form["state"]
+        zip = request.form["zip"]
+        cardName = request.form["card-name"]
+        cardNo = request.form["card-no"]
+        cardExp = request.form["card-exp"]
+        cardCVV = request.form["card-cvv"]
+
+        msg = checkoutPurchase(fullName, email, address, city, state, zip, cardName, cardNo, cardExp, cardCVV, session['cart'])
+        if(msg): 
+            msgColor = "green"
+            msgText = "Checkout Successful!" 
+        else: 
+            msgColor = "red"
+            msgText = "Couldn't checkout, try again!"
+    
+    return render_template('checkout.html', display_cart = display_cart, total = total, msgColor = msgColor, msg = msgText, session = session)
 
 # -------------------------------------------------------
 
