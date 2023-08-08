@@ -176,7 +176,7 @@ def deleteItem():
 
 # -------------------------------------------------------
 
-@app.route('/add-category')
+@app.route('/add-category', methods=["GET", "POST"])
 def addCategory(): 
     msgColor = ""
     msgText = ""
@@ -193,37 +193,48 @@ def addCategory():
 
 # -------------------------------------------------------
 
-@app.route('/edit-category')
+@app.route('/edit-category', methods=["GET", "POST"])
 def editCategory(): 
     msgColor = ""
     msgText = ""
     msg = ""
+    categories = getCategories()
+    categoryIDs = getCategoryID()
 
-    if(msg == None): 
-        msgColor = "green"
-        msgText = "Success!"
+    if request.method == "POST": 
+        oldID = request.form["old_name"]
+        newName = request.form["new_name"]
+        msg = editCategoryName(oldID, newName)
+        if(msg == None): 
+            msgColor = "green"
+            msgText = "Category Name changed successfully!"
 
-    else: 
-        msgColor = "red"
-        msgText = "Reject!"
-    return render_template('editCategory.html', msgColor = msgColor, msg = msgText, session = session)
+        else: 
+            msgColor = "red"
+            msgText = "Couldn't change Category Name!"
+    return render_template('editCategory.html', msgColor = msgColor, msg = msgText, categories = categories, categoryIDs = categoryIDs, session = session)
 
 # -------------------------------------------------------
 
-@app.route('/delete-category')
+@app.route('/delete-category', methods=["GET", "POST"])
 def deleteCategory(): 
     msgColor = ""
     msgText = ""
     msg = ""
+    categories = getCategories()
+    categoryIDs = getCategoryID()
 
-    if(msg == None): 
-        msgColor = "green"
-        msgText = "Success!"
+    if request.method == "POST": 
+        c_id = request.form["c_id"]
+        msg = deleteCategoryCompletely(c_id)
+        if(msg == None): 
+            msgColor = "green"
+            msgText = "Category deleted successfully!"
 
-    else: 
-        msgColor = "red"
-        msgText = "Reject!"
-    return render_template('deleteCategory.html', msgColor = msgColor, msg = msgText, session = session)
+        else: 
+            msgColor = "red"
+            msgText = "Couldn't delete Category!"
+    return render_template('deleteCategory.html', msgColor = msgColor, msg = msgText, categories = categories, categoryIDs = categoryIDs, session = session)
 
 # -------------------------------------------------------
 

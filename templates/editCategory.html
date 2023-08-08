@@ -29,44 +29,40 @@
 
                 <form action="?" method="post">
                     <div class="input-box">
-                        <div class="input msg" id="red">
-                            Nothing to be changed?
+                        <div class="input msg" id="{{msgColor}}">
+                            {{msg}}
                         </div>
                     </div>
 
                     <div class="input-box">
                         <label 
-                            for="category-old-name">
+                            for="old_name">
                             Select Category Name to be changed
                         </label>
 
                         <select 
                             class="input"
-                            name="category-old-name" 
-                            id="category-old-name"
+                            name="old_name" 
+                            id="old_name"
                             required>
-                            <option value="none">-- None --</option>
-                            <option value="loose">For loop priniting all item names</option>
-                            <option value="loose">Loose Items</option>
-                            <option value="packaged">Packaged Items</option>
-                            <option value="dairy">Dairy Products</option>
-                            <option value="sauces">Sauces</option>
-                            <option value="meat">Meat Based</option>
-                            <option value="pulses&grains">Pulses and Grains</option>
+                            <option value="">-- None --</option>
+                            {% for i in range(categories|length) %}
+                            <option value="{{categoryIDs[i]}}">{{categories[i]}}</option>
+                            {% endfor %}
                         </select>
                     </div>
 
                     <div class="input-box">
                         <label 
-                            for="category-new-name">
+                            for="new_name">
                             New Name: 
                         </label>
 
                         <input 
                             class="input"
                             type="text" 
-                            name="category-new-name" 
-                            id="category-new-name" 
+                            name="new_name" 
+                            id="new_name" 
                             placeholder="Eg: Veg Aata Maggi"
                             autocomplete="off" 
                             required

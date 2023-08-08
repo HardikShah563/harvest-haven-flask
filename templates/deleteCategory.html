@@ -29,48 +29,27 @@
 
                 <form action="?" method="post">
                     <div class="input-box">
-                        <div class="input msg" id="red">
-                            Category Removed!
+                        <div class="input msg" id="{{msgColor}}">
+                            {{msg}}
                         </div>
                     </div>
 
                     <div class="input-box">
                         <label 
-                            for="category-name">
+                            for="c_id">
                             Select Category to be deleted
                         </label>
 
                         <select 
                             class="input"
-                            name="category-name" 
-                            id="category-name"
+                            name="c_id" 
+                            id="c_id"
                             required>
                             <option value="">-- None --</option>
-                            <option value="loose">For loop priniting all category names</option>
-                            <option value="loose">Loose Items</option>
-                            <option value="packaged">Packaged Items</option>
-                            <option value="dairy">Dairy Products</option>
-                            <option value="sauces">Sauces</option>
-                            <option value="meat">Meat Based</option>
-                            <option value="pulses&grains">Pulses and Grains</option>
+                            {% for i in range(categories|length) %}
+                            <option value="{{categoryIDs[i]}}">{{categories[i]}}</option>
+                            {% endfor %}
                         </select>
-                    </div>
-
-                    <div class="input-box">
-                        <label 
-                            for="passcode">
-                            Confirm Admin Passcode: 
-                        </label>
-
-                        <input 
-                            class="input"
-                            type="password" 
-                            name="passcode" 
-                            id="passcode" 
-                            placeholder="Eg: *****"
-                            autocomplete="off"
-                            required
-                        >
                     </div>
 
                     <div class="input-box">

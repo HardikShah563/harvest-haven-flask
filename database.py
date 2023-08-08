@@ -247,27 +247,29 @@ def getCategoryIdFromName(c_name):
 
 # -------------------------------------------------------
 
-def editCategoryName(old_name, new_name):
+def editCategoryName(old_id, new_name):
     edit_script = '''
         update category
         set c_name = %s
-        where c_name = %s;
+        where c_id = %s
     '''
-    edit_values = (old_name, new_name)
-    cur.execute()
-    if conn.commit():
+    edit_values = (new_name, old_id)
+    cur.execute(edit_script, edit_values)
+    if (conn.commit()):
         return True
 
 # -------------------------------------------------------
 
-def deleteCategory(c_id):
-    edit_script = '''
-        delete from category where c_id = %s
+def deleteCategoryCompletely(c_id):
+    delete_script = '''
+        delete from products where c_id = %s;
+        delete from category where c_id = %s;
     '''
-    edit_values = ([c_id])
-    cur.execute()
-    if conn.commit(): 
-        return True
+    delete_values = (c_id, c_id)
+    cur.execute(delete_script, delete_values)
+    print(conn.commit())
+    # if (conn.commit()): 
+    #     return True
 
 # -------------------------------------------------------
 
