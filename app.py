@@ -54,7 +54,6 @@ def signup():
             gender = False
         password = hashlib.sha256(request.form['password'].encode('utf-8')).hexdigest()
         msg = registerAccount(name, gender, email, password)
-        print(msg)
         if(msg == None): 
             msgColor = "green"
             msgText = "New Account Registered!"
@@ -73,18 +72,36 @@ def signup():
 
 # -------------------------------------------------------
 
-@app.route('/store')
+@app.route('/store', methods=["GET", "POST"])
 def store(): 
     categories = getCategories()
     categoryIDs = getCategoryID()
     allItems = getAllItemsFromDB()
-    print(allItems)
     for category in categories: 
-        for items in allItems[category]:
-            data = base64.b64encode(items[5])
-            items[5] = data.decode()
+        for item in allItems[category]:
+            data = base64.b64encode(item[5])
+            item[5] = data.decode()
     
+    if request.method == "POST": 
+        op = request.form["op"]
+        p_id = request.form["p_id"]
+        updateCart(p_id, op)
+
+
     return render_template('store.html', categories = categories, categoryIDs = categoryIDs, allItems = allItems, session = session)
+# -------------------------------------------------------
+
+def updateCart(p_id, action): 
+    for key in session['cart'].keys(): 
+        if key == int(p_id): 
+            if action == "plus":
+                session['cart'][key] += 1
+            if action == "minus": 
+                if session['cart'][key] <= 1: 
+                    session['cart'][key] = 0
+                else:
+                    session['cart'][key] -= 1
+    print(session['cart'])
 
 # -------------------------------------------------------
 
@@ -131,7 +148,6 @@ def addItem():
         cID = request.form['c_id']
 
         msg = putItems(pName, pQty, pPrice, pStockQty, pImg, cID)
-        print(msg)
         if(msg == None): 
             msgColor = "green"
             msgText = "New Item Created!"
@@ -163,7 +179,6 @@ def editItem():
         p_stock_qty = request.form["p_stock_qty"]
 
         productDetails = getProductFromID(p_id)
-        print(productDetails)
         if c_id == None: 
             c_id = productDetails[6]
         
@@ -197,7 +212,6 @@ def deleteItem():
     if request.method == "POST": 
         p_id = request.form["p_id"]
         msg = deleteProduct(p_id)
-        print(msg)
         if(msg == None): 
             msgColor = "green"
             msgText = "Product successfully deleted!"
@@ -281,26 +295,13 @@ def signout():
 
 # -------------------------------------------------------
 
-def updateCart(p_id, action): 
-    flag = True
-    for key in session['cart'].keys(): 
-        if key == p_id: 
-            if action == 'plsu':
-                key[p_id] += 1
-            if action == 'minus': 
-                key[p_id] -= 1
-            flag = False
-    if flag: 
-        session['cart'][p_id] = 1
-
-# -------------------------------------------------------
-
 # function for setting the session variables
 def setSession(u_id, name, email, isAdmin): 
     session['u_id'] = u_id
     session['username'] = name
     session['email'] = email
     session['isAdmin'] = isAdmin
+    session['cart'] = initializeCart()
 
 # -------------------------------------------------------
 
@@ -310,6 +311,7 @@ def destroySession():
     session["name"] = None
     session["email"] = None
     session["isAdmin"] = None
+    session["cart"] = {}
 
 # -------------------------------------------------------
 

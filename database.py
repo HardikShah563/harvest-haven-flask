@@ -291,7 +291,6 @@ def getAllItemsFromDB():
     categoryList = getCategories()
     for category in categoryList: 
         allProductsInTheStore[category] = []
-    print(allProductsInTheStore)
 
     get_script = '''
         select * from products
@@ -338,11 +337,6 @@ def putItems(pName, pQty, pPrice, pStockQty, pImg, cID):
     '''
     get_values = (pName, pQty)
     cur.execute(get_script, get_values)
-    # conn.commit()
-    # data = cur.fetchall()[0]
-    # getAllItemsFromDB()
-    # c_name = getCategoryById(cID)
-    # allProductsInTheStore[c_name[0]].append(data[:-1])
     if(conn.commit()): 
        return True
 
@@ -381,6 +375,14 @@ def deleteProduct(p_id):
     if conn.commit(): 
         return True
 
+# -------------------------------------------------------
+
+def initializeCart(): 
+    cart = {}
+    allItems = getAllItemNamesAndIDs()
+    for item in allItems: 
+        cart[item[0]] = 0
+    return cart
 # -------------------------------------------------------
 
 def checkout(): 

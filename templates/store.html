@@ -35,31 +35,50 @@
             <h1 class="title txt-ctr mb-20">{{categories[i]|upper()}} PRODUCTS</h1>
             
             <div class="store" id="store">
-                {% for item in allItems[categories[i]] %}
+                {% for j in range(allItems[categories[i]]|length) %}
                 <div class="store-item">
                     <div class="flex">
                         <div class="store-item-img">
-                            <img src="data:image/png;base64,{{ item[5] }}" alt="store-item">
+                            <img src="data:image/png;base64,{{ allItems[categories[i]][j][5] }}" alt="store-item">
                         </div>
                         
                         <div class="store-item-text">
                             <p class="store-item-title">
-                            {{item[1]}} {{item[2]}}
+                            {{allItems[categories[i]][j][1]}} {{allItems[categories[i]][j][2]}}
                             </p>
                             <p class="store-item-price">
-                                ₹{{item[3]}}
+                                ₹{{allItems[categories[i]][j][3]}}
                             </p>
                         </div>
                     </div>
             
                     <div class="quantity">
-                        <div class="minus">
-                            <i class="fa-solid fa-minus"></i>
-                        </div>
-                        <div class="qty">01</div>
-                        <div class="plus">
-                            <i class="fa-solid fa-plus"></i>
-                        </div>
+                        <form action="{{ url_for('store') }}" method="post">
+                            <input type="hidden" name="op" value="minus">
+                            <input type="hidden" name="p_id" value="{{allItems[categories[i]][j][0]}}">
+                            <button class="minus" type="submit">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                        </form>
+
+                        <!-- <div class="qty">0</div> -->
+                        <input 
+                            type="number" 
+                            name="qty" 
+                            id="qty" 
+                            min="0" 
+                            value="{{ session['cart'][allItems[categories[i]][j][0]] }}" 
+                            class="qty"
+                            readonly
+                        >
+
+                        <form action="{{ url_for('store') }}" method="post">
+                            <input type="hidden" name="op" value="plus">
+                            <input type="hidden" name="p_id" value="{{allItems[categories[i]][j][0]}}">
+                            <button class="plus" type="submit">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
                 {% endfor %}
