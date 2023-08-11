@@ -15,6 +15,9 @@ Session(app)
 
 @app.route('/')
 def home(): 
+    if not session:
+        initializeSession()
+    
     return render_template('home.html', session = session)
 
 @app.route('/signin', methods=["POST", "GET"])
@@ -340,7 +343,14 @@ def signout():
     return redirect("/")
 
 # -------------------------------------------------------
+# function for initializing the session variables
+def initializeSession():
+    session['u_id'] = 0
+    session['username'] = ""
+    session['email'] = ""
+    session['isAdmin'] = False
 
+# -------------------------------------------------------
 # function for setting the session variables
 def setSession(u_id, name, email, isAdmin): 
     session['u_id'] = u_id
@@ -350,7 +360,6 @@ def setSession(u_id, name, email, isAdmin):
     session['cart'] = initializeCart()
 
 # -------------------------------------------------------
-
 # function for destroying the session variables
 def destroySession(): 
     session["u_id"] = None
