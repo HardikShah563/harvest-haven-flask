@@ -163,18 +163,28 @@ def adminDashboard():
     categories = getCategories()
     categoryIDs = getCategoryID()
     allItems = getAllItemsFromDB()
+
+    if session['isAdmin'] is not True:
+        return redirect("/not-authorized")
+
     return render_template('adminDashboard.html', categories = categories, categoryIDs = categoryIDs, allItems = allItems, session = session)
 
 # -------------------------------------------------------
 
 @app.route('/admin-stats')
 def adminStats(): 
+    if session['isAdmin'] is not True:
+        return redirect("/not-authorized")
+    
     return render_template('adminStats.html', session = session)
 
 # -------------------------------------------------------
 
 @app.route('/add-item', methods=["GET", "POST"])
 def addItem(): 
+    if session['isAdmin'] is not True:
+        return redirect("/not-authorized")
+    
     msgColor = ""
     msgText = ""
     categories = getCategories()
@@ -204,6 +214,9 @@ def addItem():
 
 @app.route('/edit-item', methods=["GET", "POST"])
 def editItem(): 
+    if session['isAdmin'] is not True:
+        return redirect("/not-authorized")
+    
     msgColor = ""
     msgText = ""
     msg = ""
@@ -246,6 +259,9 @@ def editItem():
 
 @app.route('/delete-item', methods=["GET", "POST"])
 def deleteItem(): 
+    if session['isAdmin'] is not True:
+        return redirect("/not-authorized")
+    
     msgColor = ""
     msgText = ""
     msg = ""
@@ -266,6 +282,9 @@ def deleteItem():
 
 @app.route('/add-category', methods=["GET", "POST"])
 def addCategory(): 
+    if session['isAdmin'] is not True:
+        return redirect("/not-authorized")
+    
     msgColor = ""
     msgText = ""
     msg = ""
@@ -286,6 +305,9 @@ def addCategory():
 
 @app.route('/edit-category', methods=["GET", "POST"])
 def editCategory(): 
+    if session['isAdmin'] is not True:
+        return redirect("/not-authorized")
+    
     msgColor = ""
     msgText = ""
     msg = ""
@@ -309,6 +331,9 @@ def editCategory():
 
 @app.route('/delete-category', methods=["GET", "POST"])
 def deleteCategory(): 
+    if session['isAdmin'] is not True:
+        return redirect("/not-authorized")
+    
     msgColor = ""
     msgText = ""
     msg = ""
@@ -334,6 +359,14 @@ def success():
     success_title = "Checkout Successful"
     success_subtitle = "Explore the store"
     return render_template('success.html', success_title = success_title, success_subtitle = success_subtitle, session = session)
+
+# -------------------------------------------------------
+
+@app.route('/not-authorized')
+def message():
+    msg_title = "You do not have administrative rights"
+    msg_subtitle = "You should have authorization to visit this page"
+    return render_template('message.html', msg_title = msg_title, msg_subtitle = msg_subtitle, session = session)
 
 # -------------------------------------------------------
 
