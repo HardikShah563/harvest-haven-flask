@@ -50,6 +50,9 @@
                             <p class="store-item-price">
                                 ₹{{allItems[categories[i]][j][3]}}
                             </p>
+                            {% if allItems[categories[i]][j][7] == 0 %}
+                            <div class="out-of-stock" id="red">Out of Stock</div>
+                            {% endif %}
                         </div>
                     </div>
             
@@ -76,7 +79,11 @@
                         <form action="{{ url_for('store') }}" method="post">
                             <input type="hidden" name="op" value="plus">
                             <input type="hidden" name="p_id" value="{{allItems[categories[i]][j][0]}}">
-                            <button class="plus" type="submit">
+                            <button class="plus" type="submit" 
+                                {% if allItems[categories[i]][j][7] == 0 %}
+                                    disabled
+                                {% endif %}
+                            >
                                 <i class="fa-solid fa-plus"></i>
                             </button>
                         </form>

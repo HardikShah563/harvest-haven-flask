@@ -435,6 +435,7 @@ def checkoutPurchase(u_id, fullName, email, address, city, state, zip, total, ca
     insert_values = (u_id, fullName, email, address, city, state, zip, total, purchase, total_order_qty)
     cur.execute(insert_script, insert_values)
     if (conn.commit()):
+        print("it entered")
         return True
 
 # -------------------------------------------------------
@@ -464,37 +465,22 @@ def sendEmail(email, title, message):
     emailReceiver = email
 
     subject = "Message Sent to Havest Haven"
-    body = "This is an auto generated email that was sent to Harvest Haven\n\n" + "Title: " + title + "\nMessage: " + message
+    body = "Hello, \nGreetings from Harvest Haven!\nThis is an auto generated email that was sent to Harvest Haven" + "\nFrom: " + email + "\nTitle: " + title + "\nMessage: " + message
     print(body)
 
-    # em = EmailMessage()
-    # em['From'] = emailSender
-    # em['To'] = emailReceiver
-    # em['Subject'] = subject
-    # em.set_content(body)
+    em = EmailMessage()
+    em['From'] = emailSender
+    em['To'] = emailReceiver
+    em['Subject'] = subject
+    em.set_content(body)
 
-    # context = ssl.create_default_context()
+    context = ssl.create_default_context()
 
-    # with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp: 
-    #     smtp.login(emailSender, emailPassword)
-    #     smtp.sendmail(emailSender, emailReceiver, em.as_string())
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp: 
+        smtp.login(emailSender, emailPassword)
+        smtp.sendmail(emailSender, emailReceiver, em.as_string())
 
-
-# **INVENTORY AND PRODUCT METRICS:**
-# Stock levels: Monitor the quantity of each product in stock to avoid overstocking or shortages.
-# Product performance: Analyze the performance of different products in terms of sales, margins, and customer reviews.
-
-# **CUSTOMER ENGAGEMENT METRICS:**
-# Website traffic
-# Customer Reviews and Ratings
-
-# **DEMOGRAPHICS AND CUSTOMER BEHAVIOR METRICS:**
-# Customer demographics
-# Customer lifetime value (CLV)
-# Total Users
-# Total Orders
-# Male/ Female customers
-
+# -------------------------------------------------------
 # -------------------------------------------------------
 # COSTOMER DEMOGRAPHICS:
 def totalUsers():
@@ -509,6 +495,8 @@ def totalUsers():
         return 0
     else:
         return data
+
+# -------------------------------------------------------
 
 def totalMaleUsers():
     get_script = '''
@@ -541,12 +529,16 @@ def totalSales():
     else:
         return sales
 
+# -------------------------------------------------------
+
 def totalSalesRevenue():
     sales = totalSales()
     if sales == None:
         return 0
     else:
         return 0.2 * sales
+
+# -------------------------------------------------------
 
 def averageOrderValue():
     get_script = '''
@@ -561,7 +553,8 @@ def averageOrderValue():
     else:
         return value
 
-# INCOMPLETE
+# -------------------------------------------------------
+
 def repeatPurchaseRate():
     get_script = '''
         select count(distinct u_id)
@@ -601,6 +594,8 @@ def stockLevels():
     # print it in the form of table
     return stock
 
+# -------------------------------------------------------
+
 def bestSellingProducts():
     get_script = '''
         select p_id
@@ -617,6 +612,8 @@ def bestSellingProducts():
     data = base64.b64encode(product[5])
     product[5] = data.decode()
     return product
+
+# -------------------------------------------------------
 
 def slowMovingProduct():
     get_script = '''
@@ -635,6 +632,8 @@ def slowMovingProduct():
     product[5] = data.decode()
     return product
 
+# -------------------------------------------------------
+
 def totalOrders():
     get_script = '''
         select count(distinct o_id)
@@ -648,7 +647,7 @@ def totalOrders():
     else:
         return data
 
-
+# -------------------------------------------------------
 
 # INCOMPLETE FUNCTION
 def customerLifeTimeValue(): 

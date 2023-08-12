@@ -116,6 +116,19 @@ html {
     display: none;
 }
 
+.out-of-stock {
+    font-weight: 600;
+    padding: 5px 15px;
+    margin-block: 5px;
+    width: fit-content;
+    border-radius: var(--small-radius);
+}
+
+button:disabled,
+button[disabled] {
+    cursor: not-allowed;
+}
+
 #red {
     background-color: var(--error);
 }
