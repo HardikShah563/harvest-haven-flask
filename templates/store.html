@@ -1,4 +1,5 @@
 {% from 'navbar.html' import navbar %}
+{% from 'footer.html' import footer %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -87,6 +88,8 @@
 
         <a href="{{ url_for('cart') }}" class="black-btn">GO TO CART</a>
     </div>
+
+    {{ footer() }}
 </body>
 
 </html>
