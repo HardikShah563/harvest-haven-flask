@@ -52,6 +52,11 @@
     border-radius: 4px;
 }
 
+.textarea {
+    height: 100px;
+    resize: none;
+}
+
 .input.msg {
     background-color: transparent
 }
@@ -83,14 +88,6 @@
 .msg {
     text-align: center;
     padding: 12px;
-}
-
-#red {
-    background-color: var(--error);
-}
-
-#green {
-    background-color: var(--success);
 }
 
 @media (max-width: 800px) {

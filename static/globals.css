@@ -64,6 +64,11 @@ html {
     gap: 5px;
 }
 
+.w-90 {
+    width: 90%;
+    margin: auto auto;
+}
+
 .w-100 {
     width: 100%;
 }
@@ -105,6 +110,18 @@ html {
 
 .black-btn:hover {
     scale: 1.05;
+}
+
+.hidden {
+    display: none;
+}
+
+#red {
+    background-color: var(--error);
+}
+
+#green {
+    background-color: var(--success);
 }
 
 /* ---- navigation bar css ---- */
@@ -230,7 +247,22 @@ nav {
     color: #ffa500;
 }
 
-/* Footer CSS */
+/* Contact Us Section */
+.contact-us {
+    width: 90vw;
+    min-height: 200px;
+    margin: 40px auto;
+    padding: 20px;
+    border: var(--border);
+    border-radius: var(--big-radius);
+}
+
+.contact-us .form {
+    width: 40%;
+    margin: auto auto;
+}
+
+/* Footer CSS Section */
 
 .footer {
     width: 90vw;
@@ -242,12 +274,6 @@ nav {
     border-bottom: none;
     border-top-left-radius: var(--big-radius);
     border-top-right-radius: var(--big-radius);
-}
-
-
-.footer {
-    padding: 10px 40px 10px 40px;
-    background-color: var(--black);
 }
 
 .footer-sections {

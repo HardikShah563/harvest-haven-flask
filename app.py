@@ -13,10 +13,23 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def home(): 
     if not session:
         initializeSession()
+
+    if request.method == 'POST': 
+        email = request.form['email']
+        title = request.form['title']
+        message = request.form['message']
+
+        msg = sendEmail(email, title, message)
+        if(msg): 
+            msgColor = "green"
+            msgText = "Message Sent!" 
+        else: 
+            msgColor = "red"
+            msgText = "Couldn't send message!"
     
     return render_template('home.html', session = session)
 
@@ -109,6 +122,9 @@ def updateCart(p_id, action):
 
 @app.route('/cart', methods=["GET", "POST"])
 def cart(): 
+    # if session['u_id'] is not True:
+    #     return redirect("/store")
+    
     allItems = getAllItemsFromDB()
     display_cart = recalculateDisplayCart(session['cart'])
     
@@ -124,6 +140,9 @@ def cart():
 
 @app.route('/checkout', methods=["GET", "POST"])
 def checkout(): 
+    # if session['u_id'] is not True:
+    #     return redirect("/store")
+    
     msgColor = ""
     msgText = ""
     display_cart = recalculateDisplayCart(session['cart'])
@@ -176,7 +195,22 @@ def adminStats():
     if session['isAdmin'] is not True:
         return redirect("/not-authorized")
     
-    return render_template('adminStats.html', session = session)
+    allItems = getAllItemsFromDB()
+    stats = {
+        "totalusers" : totalUsers(),
+        "male" : totalMaleUsers(),
+        "female" : (totalUsers() - totalMaleUsers()),
+        "orders"  : totalOrders(),
+        "totalsales" : totalSales(),
+        "salesRevenue" : totalSalesRevenue(),
+        "averageOrderValue" : averageOrderValue(),
+        "repeatPurchaseRate" : repeatPurchaseRate(),
+        "bestSellingProduct" : bestSellingProducts(),
+        "slowMovingProduct" : slowMovingProduct(),
+        "stockLevels" : stockLevels(),
+    }
+    
+    return render_template('adminStats.html', stats = stats,allItems = allItems,  session = session)
 
 # -------------------------------------------------------
 

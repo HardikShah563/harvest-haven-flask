@@ -3,6 +3,10 @@ import psycopg2.extras
 import base64
 import json
 
+from email.message import EmailMessage
+import ssl
+import smtplib
+
 hostname = 'localhost'
 database = 'harvesthaven'
 username = 'postgres'
@@ -53,6 +57,7 @@ create_script = '''
         p_stock_qty integer not null, 
         p_img bytea not null, 
         c_id integer not null, 
+        stock_available integer, 
         PRIMARY KEY (p_id), 
         FOREIGN KEY (c_id) REFERENCES category (c_id)
     );
@@ -69,6 +74,7 @@ create_script = '''
         zip integer not null, 
         order_total float not null, 
         purchase jsonb not null, 
+        total_order_qty integer not null, 
         PRIMARY KEY (o_id), 
         FOREIGN KEY (u_id) REFERENCES users (u_id)
     );
@@ -413,13 +419,20 @@ def createPurchaseJSON(cart):
 
 # -------------------------------------------------------
 
+def totalOrderCount(cart):
+    count = 0
+    for item in cart: 
+        count += cart[item]
+    return count
+
 def checkoutPurchase(u_id, fullName, email, address, city, state, zip, total, cart): 
     purchase = createPurchaseJSON(cart)
+    total_order_qty = totalOrderCount(cart)
     insert_script = '''
-        insert into orders (o_id, u_id, username, email, addr, city, state_province_ut, zip, order_total, purchase)
-        values (NEXTVAL('order_seq_no'), %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        insert into orders (o_id, u_id, username, email, addr, city, state_province_ut, zip, order_total, purchase, total_order_qty)
+        values (NEXTVAL('order_seq_no'), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     '''
-    insert_values = (u_id, fullName, email, address, city, state, zip, total, purchase)
+    insert_values = (u_id, fullName, email, address, city, state, zip, total, purchase, total_order_qty)
     cur.execute(insert_script, insert_values)
     if (conn.commit()):
         return True
@@ -445,3 +458,206 @@ def setShopItemsAndCategories():
     getAllItemsFromDB()
 # -------------------------------------------------------
 
+def sendEmail(email, title, message):
+    emailSender = 'hardikts@gmail.com'
+    emailPassword = 'iughuynszadhvwrl'
+    emailReceiver = email
+
+    subject = "Message Sent to Havest Haven"
+    body = "This is an auto generated email that was sent to Harvest Haven\n\n" + "Title: " + title + "\nMessage: " + message
+    print(body)
+
+    # em = EmailMessage()
+    # em['From'] = emailSender
+    # em['To'] = emailReceiver
+    # em['Subject'] = subject
+    # em.set_content(body)
+
+    # context = ssl.create_default_context()
+
+    # with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp: 
+    #     smtp.login(emailSender, emailPassword)
+    #     smtp.sendmail(emailSender, emailReceiver, em.as_string())
+
+
+# **INVENTORY AND PRODUCT METRICS:**
+# Stock levels: Monitor the quantity of each product in stock to avoid overstocking or shortages.
+# Product performance: Analyze the performance of different products in terms of sales, margins, and customer reviews.
+
+# **CUSTOMER ENGAGEMENT METRICS:**
+# Website traffic
+# Customer Reviews and Ratings
+
+# **DEMOGRAPHICS AND CUSTOMER BEHAVIOR METRICS:**
+# Customer demographics
+# Customer lifetime value (CLV)
+# Total Users
+# Total Orders
+# Male/ Female customers
+
+# -------------------------------------------------------
+# COSTOMER DEMOGRAPHICS:
+def totalUsers():
+    get_script = '''
+        select count(distinct u_id)
+        from users
+    '''
+    cur.execute(get_script)
+    conn.commit()
+    data = cur.fetchone()[0]
+    if data == None:
+        return 0
+    else:
+        return data
+
+def totalMaleUsers():
+    get_script = '''
+        select count(distinct u_id)
+        from users
+        where gender = True
+    '''
+    cur.execute(get_script)
+    conn.commit()
+    data = cur.fetchone()[0]
+    if data == None:
+        return 0
+    else:
+        return data
+
+# -------------------------------------------------------
+# -------------------------------------------------------
+# SALES AND REVENUE METRICS: 
+def totalSales():
+    sales = 0
+    get_script = '''
+        select sum(order_total)
+        from orders
+    '''
+    cur.execute(get_script)
+    conn.commit()
+    sales = cur.fetchone()[0]
+    if sales == None:
+        return 0.0
+    else:
+        return sales
+
+def totalSalesRevenue():
+    sales = totalSales()
+    if sales == None:
+        return 0
+    else:
+        return 0.2 * sales
+
+def averageOrderValue():
+    get_script = '''
+        select avg(order_total)
+        from orders
+    '''
+    cur.execute(get_script)
+    conn.commit()
+    value = cur.fetchone()[0]
+    if value == None:
+        return 0.0
+    else:
+        return value
+
+# INCOMPLETE
+def repeatPurchaseRate():
+    get_script = '''
+        select count(distinct u_id)
+        from orders
+    '''
+    cur.execute(get_script)
+    conn.commit()
+    allBuyers = cur.fetchone()[0]
+    if allBuyers == 0:
+        return 0
+
+    get_script = '''
+        select count(*) as repeat_order_count
+        from (
+            select u_id
+            from orders
+            group by u_id
+            having count(*) > 1
+        ) as repeat_orders
+    '''
+    cur.execute(get_script)
+    conn.commit()
+    repeatingBuyers = cur.fetchone()[0]
+    return int((repeatingBuyers / allBuyers) * 100)
+# -------------------------------------------------------
+# -------------------------------------------------------
+# INVENTORY AND PRODUCT METRICS: 
+def stockLevels():
+    get_script = '''
+        select p_name, stock_available
+        from products
+    '''
+    cur.execute(get_script)
+    conn.commit()
+    stock = cur.fetchall()
+    # returns a list of list
+    # print it in the form of table
+    return stock
+
+def bestSellingProducts():
+    get_script = '''
+        select p_id
+        from products
+        where (p_stock_qty - stock_available) = (
+            select max(p_stock_qty - stock_available)
+            from products
+        )
+    '''
+    cur.execute(get_script)
+    conn.commit()
+    p_id = cur.fetchone()[0]
+    product = getProductFromID(p_id)
+    data = base64.b64encode(product[5])
+    product[5] = data.decode()
+    return product
+
+def slowMovingProduct():
+    get_script = '''
+        select p_id
+        from products
+        where (p_stock_qty - stock_available) = (
+            select min(p_stock_qty - stock_available)
+            from products
+        )
+    '''
+    cur.execute(get_script)
+    conn.commit()
+    p_id = cur.fetchone()[0]
+    product = getProductFromID(p_id)
+    data = base64.b64encode(product[5])
+    product[5] = data.decode()
+    return product
+
+def totalOrders():
+    get_script = '''
+        select count(distinct o_id)
+        from orders
+    '''
+    cur.execute(get_script)
+    conn.commit()
+    data = cur.fetchone()[0]
+    if data == None:
+        return 0
+    else:
+        return data
+
+
+
+# INCOMPLETE FUNCTION
+def customerLifeTimeValue(): 
+    get_script = '''
+        select u_id, order_total 
+        from orders
+    '''
+    cur.execute(get_script)
+    conn.commit()
+    data = cur.fetchall()
+    value = 0
+    return value

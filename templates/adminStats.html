@@ -10,20 +10,231 @@
     <title>Harvest Haven</title>
     <!-- Stylesheet Link -->
     <link rel="stylesheet" href="./static/globals.css">
-    <link rel="stylesheet" href="./static/store.css">
-    <link rel="stylesheet" href="./static/admin.css">
+    <link rel="stylesheet" href="./static/stats.css">
     <!-- Script Tag -->
-    <script src="./static/script.js" defer></script>
+    <script src="./static/chart.js" defer></script>
     <!-- Icons Link -->
     <script src="https://kit.fontawesome.com/6d232ec003.js" crossorigin="anonymous"></script>
+    <!-- Apex Charts CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 
 <body>
     {{ navbar(session) }}
 
     <div class="page admin-page">
-        <h1 class="title txt-ctr">User Statistics</h1>
+        <h1 class="title txt-ctr mb-20">User Statistics</h1>
+
+        <div class="stats-section">
+            <h1 class="title">Demographics and Customer Behavior Metrics: </h1>
+            <div class="stats-div flex">
+                <div class="stats">
+                    <div class="hidden" id="male">{{ stats["male"] }}</div>
+                    <div class="hidden" id="female">{{ stats["female"] }}</div>
+                    <h1 class="subtitle">Users: (Male and Female)</h1>
+                    <div id="malefemalepiechart"></div>
+
+                    <script>
+                        const male = parseInt(document.getElementById("male").innerText)
+                        const female = parseInt(document.getElementById("female").innerText)
+
+                        var piechart = {
+                            series: [male, female],
+                            chart: {
+                                width: 350,
+                                type: 'pie',
+                            },
+                            labels: ['Male', 'Female'],
+                            responsive: [{
+                                breakpoint: 500,
+                                options: {
+                                    chart: {
+                                        width: 250
+                                    },
+                                    legend: {
+                                        position: 'bottom'
+                                    }
+                                }
+                            }]
+                        };
+                        var malefemalepiechart = new ApexCharts(document.querySelector("#malefemalepiechart"), piechart);
+                        malefemalepiechart.render();
+                    </script>
+                </div>
+
+                <div class="stats">
+                    <h1 class="subtitle">Total Users:</h1>
+                    <h1 class="verybigtext">{{ stats["totalusers"] }}</h1>
+                </div>
+
+                <div class="stats">
+                    <h1 class="subtitle">Total Orders:</h1>
+                    <h1 class="verybigtext">{{ stats["orders"] }}</h1>
+                </div>
+
+                <div class="stats">
+                    <h1 class="subtitle">Customer Lifetime Value:</h1>
+                    <h1 class="verybigtext">{{ stats["female"] }}</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-section">
+            <h1 class="title">Inventory and Product Metrics: </h1>
+            <div class="stats-div flex inventory">
+                <div class="table">
+                    <table>
+                        <h1 class="subtitle">Stock Levels: </h1>
+                        <tr>
+                            <th>Name</th>
+                            <th>Stock Available</th>
+                        </tr>
+                        {% for stocks in stats["stockLevels"] %}
+                        <tr>
+                            <td>{{ stocks[0] }}</td>
+                            <td>{{ stocks[1] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table><!-- table of stock levels -->
+                </div>
+
+                <div class="inventory-right">
+                    <div class="flex mb-20">
+                        <div class="stats">
+                            <div class="hidden" id="male">{{ stats["male"] }}</div>
+                            <div class="hidden" id="female">{{ stats["female"] }}</div>
+
+                            {% for category in allItems %}
+                            {% for items in allItems[category] %}
+                            <div class="hidden {{category}}">{{items[1]}}</div>
+                            {% endfor %}
+                            {% endfor %}
+
+                            <h1 class="subtitle">Category Wise Revenue Split:</h1>
+                            <div id="revenueSplitChart"></div>
+
+                            <script>
+                                var revenueSplitChart = {
+                                    series: [
+                                        {% for category in allItems %}
+                                            {% for items in allItems[category] %}
+                                                {{items[3]}},
+                                            {% endfor %}
+                                        {% endfor %}
+                                    ],
+                                chart: {
+                                    width: 500,
+                                        type: 'pie',
+                                    },
+                                labels: [
+                                    {% for category in allItems %}
+                                        {% for items in allItems[category] %}
+                                            "{{items[1]}}",
+                                        {% endfor %}
+                                    {% endfor %}
+                                ],
+                                    responsive: [{
+                                        breakpoint: 500,
+                                        options: {
+                                            chart: {
+                                                width: 250
+                                            },
+                                            legend: {
+                                                position: 'bottom'
+                                            }
+                                        }
+                                    }]
+                                };
+                                var revenueSplit = new ApexCharts(document.querySelector("#revenueSplitChart"), revenueSplitChart);
+                                revenueSplit.render();
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="flex inventory-right">
+                        <div class="stats">
+                            <h1 class="subtitle">Best Selling Product:</h1>
+                            <div>
+                                <div class="store-item-img">
+                                    <img src="data:image/png;base64,{{ stats['bestSellingProduct'][5] }}"
+                                        alt="store-item">
+                                </div>
+
+                                <div class="store-item-text">
+                                    <h1 class="title">
+                                        {{stats["bestSellingProduct"][1]}} {{stats["bestSellingProduct"][2]}}
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stats">
+                            <h1 class="subtitle">Slow Selling Product:</h1>
+                            <div>
+                                <div class="store-item-img">
+                                    <img src="data:image/png;base64,{{ stats['slowMovingProduct'][5] }}"
+                                        alt="store-item">
+                                </div>
+
+                                <div class="store-item-text">
+                                    <h1 class="title">
+                                        {{stats["bestSellingProduct"][1]}} {{stats["slowMovingProduct"][2]}}
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div class="w-90">
+        <h1 class="subtitle" id="red-card">
+            *Note: Sales Revenue is 20% of total order value per order
+        </h1>
+    </div>
+
+    <div class="stats-section">
+        <h1 class="title">Sales and Revenue Metrics: </h1>
+
+        <div class="stats-div flex">
+            <div class="stats">
+                <h1 class="subtitle">Total Sales:</h1>
+                <h1 class="verybigtext">₹{{ stats["totalsales"] }}</h1>
+            </div>
+
+            <div class="stats">
+                <h1 class="subtitle">Total Sales Revenue:</h1>
+                <h1 class="verybigtext">₹{{ stats["salesRevenue"] }}</h1>
+            </div>
+
+            <div class="stats">
+                <h1 class="subtitle">Average Order Value:</h1>
+                <h1 class="verybigtext">₹{{ stats["averageOrderValue"] }}</h1>
+            </div>
+
+            <div class="stats">
+                <h1 class="subtitle">Repeat Purchase Rate:</h1>
+                <h1 class="verybigtext">{{ stats["repeatPurchaseRate"] }}%</h1>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 
+        **CUSTOMER ENGAGEMENT METRICS:**
+        Website traffic
+        Customer Reviews and Ratings
+
+        **DEMOGRAPHICS AND CUSTOMER BEHAVIOR METRICS:**
+        Customer demographics
+        Customer lifetime value (CLV)
+        Total Users
+        Total Orders
+        Male/ Female customers
+        
+      -->
 </body>
 
 </html>
