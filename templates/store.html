@@ -51,7 +51,7 @@
                                 ₹{{allItems[categories[i]][j][3]}}
                             </p>
                             {% if allItems[categories[i]][j][7] == 0 %}
-                            <div class="out-of-stock" id="red">Out of Stock</div>
+                                <div class="out-of-stock" id="red">Out of Stock</div>
                             {% endif %}
                         </div>
                     </div>
@@ -72,6 +72,7 @@
                             id="qty" 
                             min="0" 
                             value="{{ session['cart'][allItems[categories[i]][j][0]] }}" 
+                            max="{{allItems[categories[i]][j][7]}}"
                             class="qty"
                             readonly
                         >
@@ -96,7 +97,7 @@
         <a href="{{ url_for('cart') }}" class="black-btn">GO TO CART</a>
     </div>
 
-    {{ footer() }}
+    <!-- {{ footer() }} -->
 </body>
 
 </html>

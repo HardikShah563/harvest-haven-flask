@@ -93,6 +93,7 @@ def store():
     categories = getCategories()
     categoryIDs = getCategoryID()
     allItems = getAllItemsFromDB()
+    print(allItems)
     for category in categories: 
         for item in allItems[category]:
             data = base64.b64encode(item[5])
@@ -107,23 +108,26 @@ def store():
 # -------------------------------------------------------
 
 def updateCart(p_id, action): 
+    limit = getProductFromID(p_id)[7]
     for key in session['cart'].keys(): 
         if key == int(p_id): 
             if action == "plus":
-                session['cart'][key] += 1
+                if session['cart'][key] >= limit:
+                    session['cart'][key] = limit
+                else:
+                    session['cart'][key] += 1
             if action == "minus": 
                 if session['cart'][key] <= 1: 
                     session['cart'][key] = 0
                 else:
                     session['cart'][key] -= 1
-    print(session['cart'])
 
 # -------------------------------------------------------
 
 @app.route('/cart', methods=["GET", "POST"])
 def cart(): 
-    # if session['u_id'] is not True:
-    #     return redirect("/store")
+    if session['cart'] == {}:
+        return redirect("/store")
     
     allItems = getAllItemsFromDB()
     display_cart = recalculateDisplayCart(session['cart'])
@@ -140,18 +144,18 @@ def cart():
 
 @app.route('/checkout', methods=["GET", "POST"])
 def checkout(): 
-    # if session['u_id'] is not True:
-    #     return redirect("/store")
+    if session['u_id'] == 0:
+        return redirect("/store")
     
     msgColor = ""
     msgText = ""
     display_cart = recalculateDisplayCart(session['cart'])
+    print(display_cart)
     total = []
     total.append(calcTotal(display_cart))
     total.append(calcGST(total[0]))
     total.append(calcGST(total[0]))
     total.append(total[0] + (total[1] * 2))
-
     createPurchaseJSON(session['cart'])
 
     if request.method == "POST": 
@@ -166,7 +170,8 @@ def checkout():
         if(msg) == None: 
             msgColor = "green"
             msgText = "Checkout Successful!" 
-            session['cart'] = {}
+            reduceStock(display_cart)
+            session['cart'] = initializeCart()
             display_cart = {}
             return redirect("/success")
         else: 
@@ -407,6 +412,7 @@ def message():
 @app.route('/signout')
 def signout(): 
     destroySession()
+    initializeSession()
     return redirect("/")
 
 # -------------------------------------------------------

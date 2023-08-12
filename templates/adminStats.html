@@ -111,7 +111,7 @@
                             {% endfor %}
                             {% endfor %}
 
-                            <h1 class="subtitle">Category Wise Revenue Split:</h1>
+                            <h1 class="subtitle">Product Wise Revenue Split:</h1>
                             <div id="revenueSplitChart"></div>
 
                             <script>
@@ -135,10 +135,20 @@
                                     {% endfor %}
                                 ],
                                     responsive: [{
+                                        breakpoint: 900,
+                                        options: {
+                                            chart: {
+                                                width: 500
+                                            },
+                                            legend: {
+                                                position: 'bottom'
+                                            }
+                                        }
+                                    }, {
                                         breakpoint: 500,
                                         options: {
                                             chart: {
-                                                width: 250
+                                                width: 400
                                             },
                                             legend: {
                                                 position: 'bottom'
@@ -202,17 +212,17 @@
         <div class="stats-div flex">
             <div class="stats">
                 <h1 class="subtitle">Total Sales:</h1>
-                <h1 class="verybigtext">₹{{ stats["totalsales"] }}</h1>
+                <h1 class="verybigtext">₹{{ '%0.1f' % stats["totalsales"]|float }}</h1>
             </div>
 
             <div class="stats">
                 <h1 class="subtitle">Total Sales Revenue:</h1>
-                <h1 class="verybigtext">₹{{ stats["salesRevenue"] }}</h1>
+                <h1 class="verybigtext">₹{{ '%0.1f' % stats["salesRevenue"]|float }}</h1>
             </div>
 
             <div class="stats">
                 <h1 class="subtitle">Average Order Value:</h1>
-                <h1 class="verybigtext">₹{{ stats["averageOrderValue"] }}</h1>
+                <h1 class="verybigtext">₹{{ '%0.1f' % stats["averageOrderValue"]|float }}</h1>
             </div>
 
             <div class="stats">

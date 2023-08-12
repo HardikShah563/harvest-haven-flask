@@ -65,6 +65,33 @@
     width: 100%;
 }
 
+@media (max-width: 1100px) {
+    .stats-section {
+        width: 95vw;
+        padding-inline: 10px;
+    }
+
+    .table table {
+        width: 280px;
+    }
+}
+
+@media (max-width: 850px) {
+    .inventory {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .inventory-right .flex {
+        justify-content: center;
+    }
+
+    .table table {
+        width: 80vw;
+        justify-content: center;
+    }
+}
+
 @media (max-width: 450px) {
     .stats-div {
         display: block !important;

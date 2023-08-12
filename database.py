@@ -309,7 +309,7 @@ def getAllItemsFromDB():
 
     for product in data: 
         c_name = getCategoryById(product[6])[0]
-        allProductsInTheStore[c_name].append(product[:-1])
+        allProductsInTheStore[c_name].append(product)
 
     return allProductsInTheStore
 
@@ -347,6 +347,30 @@ def putItems(pName, pQty, pPrice, pStockQty, pImg, cID):
     cur.execute(get_script, get_values)
     if(conn.commit()): 
        return True
+
+# -------------------------------------------------------
+
+def reduceStock(cart):
+    print(cart)
+    for keys in cart:
+        get_script = '''
+            select stock_available 
+            from products 
+            where p_id = %s
+        '''
+        get_values = ([keys[0]])
+        cur.execute(get_script, get_values)
+        conn.commit()
+        data = cur.fetchone()[0]
+        data = data - keys[7]
+        update_script = '''
+            update products
+            set stock_available = %s
+            where p_id = %s
+        '''
+        update_values = (data, keys[0])
+        cur.execute(update_script, update_values)
+        conn.commit()
 
 # -------------------------------------------------------
 
@@ -443,7 +467,7 @@ def checkoutPurchase(u_id, fullName, email, address, city, state, zip, total, ca
 def calcTotal(cart): 
     total = 0
     for cart_item in cart: 
-        total = total + (cart_item[3] * cart_item[6])
+        total = total + (cart_item[3] * cart_item[7])
     return total
 
 # -------------------------------------------------------
