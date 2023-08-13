@@ -8,6 +8,8 @@
 
 .form-left {
     width: 60vw;
+    flex-direction: column;
+    justify-content: center;
     background-color: var(--bg-dirty);
 }
 
@@ -92,11 +94,15 @@
 
 @media (max-width: 800px) {
     .form-left {
-        width: 50vw;
+        width: 100vw;
+        height: fit-content;
+        padding-bottom: 100px;
     }
 
     .form-right {
         width: 50vw;
+        height: fit-content;
+        padding-top: 100px;
     }
 
     .form {

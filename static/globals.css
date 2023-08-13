@@ -273,6 +273,7 @@ nav {
     padding: 20px;
     border: var(--border);
     border-radius: var(--big-radius);
+    overflow: hidden;
 }
 
 .contact-us .form {
