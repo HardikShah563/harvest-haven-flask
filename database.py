@@ -362,7 +362,7 @@ def reduceStock(cart):
         cur.execute(get_script, get_values)
         conn.commit()
         data = cur.fetchone()[0]
-        data = data - keys[7]
+        data = data - keys[8]
         update_script = '''
             update products
             set stock_available = %s
@@ -467,7 +467,7 @@ def checkoutPurchase(u_id, fullName, email, address, city, state, zip, total, ca
 def calcTotal(cart): 
     total = 0
     for cart_item in cart: 
-        total = total + (cart_item[3] * cart_item[7])
+        total = total + (cart_item[3] * cart_item[8])
     return total
 
 # -------------------------------------------------------

@@ -189,7 +189,7 @@
 
                                 <div class="store-item-text">
                                     <h1 class="title">
-                                        {{stats["bestSellingProduct"][1]}} {{stats["slowMovingProduct"][2]}}
+                                        {{stats["slowMovingProduct"][1]}} {{stats["slowMovingProduct"][2]}}
                                     </h1>
                                 </div>
                             </div>
@@ -198,36 +198,36 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="w-90">
-        <h1 class="subtitle" id="red-card">
-            *Note: Sales Revenue is 20% of total order value per order
-        </h1>
-    </div>
+        <div class="w-90">
+            <h1 class="subtitle" id="red-card">
+                *Note: Sales Revenue is 20% of total order value per order
+            </h1>
+        </div>
 
-    <div class="stats-section">
-        <h1 class="title">Sales and Revenue Metrics: </h1>
+        <div class="stats-section">
+            <h1 class="title">Sales and Revenue Metrics: </h1>
 
-        <div class="stats-div flex">
-            <div class="stats">
-                <h1 class="subtitle">Total Sales:</h1>
-                <h1 class="verybigtext">₹{{ '%0.1f' % stats["totalsales"]|float }}</h1>
-            </div>
+            <div class="stats-div flex">
+                <div class="stats">
+                    <h1 class="subtitle">Total Sales:</h1>
+                    <h1 class="verybigtext">₹{{ '%0.1f' % stats["totalsales"]|float }}</h1>
+                </div>
 
-            <div class="stats">
-                <h1 class="subtitle">Total Sales Revenue:</h1>
-                <h1 class="verybigtext">₹{{ '%0.1f' % stats["salesRevenue"]|float }}</h1>
-            </div>
+                <div class="stats">
+                    <h1 class="subtitle">Total Sales Revenue:</h1>
+                    <h1 class="verybigtext">₹{{ '%0.1f' % stats["salesRevenue"]|float }}</h1>
+                </div>
 
-            <div class="stats">
-                <h1 class="subtitle">Average Order Value:</h1>
-                <h1 class="verybigtext">₹{{ '%0.1f' % stats["averageOrderValue"]|float }}</h1>
-            </div>
+                <div class="stats">
+                    <h1 class="subtitle">Average Order Value:</h1>
+                    <h1 class="verybigtext">₹{{ '%0.1f' % stats["averageOrderValue"]|float }}</h1>
+                </div>
 
-            <div class="stats">
-                <h1 class="subtitle">Repeat Purchase Rate:</h1>
-                <h1 class="verybigtext">{{ stats["repeatPurchaseRate"] }}%</h1>
+                <div class="stats">
+                    <h1 class="subtitle">Repeat Purchase Rate:</h1>
+                    <h1 class="verybigtext">{{ stats["repeatPurchaseRate"] }}%</h1>
+                </div>
             </div>
         </div>
     </div>
