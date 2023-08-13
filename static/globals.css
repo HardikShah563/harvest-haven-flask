@@ -14,6 +14,7 @@
     --accent: #000000;
     --error: #fd4557d3;
     --success: #2afc46b9;
+    --yellow: #ffa500;
 
     /* other variables */
     --big-radius: 24px;
@@ -94,6 +95,13 @@ html {
     margin-block: 10px;
 }
 
+.verybigtext {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 100px;
+}
+
 .black-btn {
     width: fit-content;
     margin: 40px auto;
@@ -116,17 +124,14 @@ html {
     display: none;
 }
 
-.out-of-stock {
-    font-weight: 600;
-    padding: 5px 15px;
-    margin-block: 5px;
-    width: fit-content;
-    border-radius: var(--small-radius);
-}
-
 button:disabled,
 button[disabled] {
     cursor: not-allowed;
+}
+
+.home-main {
+    width: 500px;
+    margin: 20px auto;
 }
 
 #red {
@@ -271,8 +276,18 @@ nav {
 }
 
 .contact-us .form {
-    width: 40%;
+    width: 500px;
     margin: auto auto;
+}
+
+@media (max-width: 600px) {
+    .home-main {
+        width: 80vw;
+    }
+
+    .contact-us .form {
+        width: 90%;
+    }
 }
 
 /* Footer CSS Section */

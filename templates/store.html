@@ -24,8 +24,8 @@
     <div class="page">
         <div class="store-banner flex">
             <div class="store-banner-left">
-                <h1 class="title">Save upto 50% off</h1>
-                <a class="" href="#">Shop Now</a>
+                <h1 class="title">Get Fresh Groceries, Right At Your Door Step</h1>
+                <a class="black-btn" href="#store">Shop Now</a>
             </div>
             <div>
                 <img class="store-banner-img" src="../static/store-banner.png" alt="store banner img">
@@ -52,6 +52,9 @@
                             </p>
                             {% if allItems[categories[i]][j][7] == 0 %}
                                 <div class="out-of-stock" id="red">Out of Stock</div>
+                            {% endif %}
+                            {% if allItems[categories[i]][j][7] <= 5 and allItems[categories[i]][j][7] > 0 %}
+                                <div class="out-of-stock yellow">Moving Fast</div>
                             {% endif %}
                         </div>
                     </div>

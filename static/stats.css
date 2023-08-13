@@ -12,13 +12,6 @@
     flex-wrap: wrap;
 }
 
-.verybigtext {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 100px;
-}
-
 .table table {
     padding: 10px;
     margin: 0px 0px 20px 0px;

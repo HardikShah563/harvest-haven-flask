@@ -15,6 +15,14 @@ Session(app)
 
 @app.route('/', methods=["GET", "POST"])
 def home(): 
+    allItems = getAllItemsFromDB()
+    sendItems = {}
+    for category in allItems: 
+        sendItems[category] = allItems[category][0]
+        print(sendItems[category])
+        data = base64.b64encode(sendItems[category][5])
+        sendItems[category][5] = data.decode()
+    
     if not session:
         initializeSession()
 
@@ -31,7 +39,7 @@ def home():
             msgColor = "red"
             msgText = "Couldn't send message!"
     
-    return render_template('home.html', session = session)
+    return render_template('home.html', allItems = sendItems, session = session)
 
 @app.route('/signin', methods=["POST", "GET"])
 def signin():
@@ -50,7 +58,7 @@ def signin():
             msgColor = "red"
             msgText = "Couldn't log you in, try again!"
     if session['u_id']: 
-        return redirect("/")
+        return redirect("/store")
     
     return render_template('signin.html', msgColor = msgColor,  msg = msgText, session = session)
 
@@ -93,7 +101,6 @@ def store():
     categories = getCategories()
     categoryIDs = getCategoryID()
     allItems = getAllItemsFromDB()
-    print(allItems)
     for category in categories: 
         for item in allItems[category]:
             data = base64.b64encode(item[5])
@@ -413,6 +420,7 @@ def message():
 def signout(): 
     destroySession()
     initializeSession()
+    session['cart'] = initializeCart()
     return redirect("/")
 
 # -------------------------------------------------------
