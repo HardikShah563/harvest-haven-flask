@@ -351,7 +351,6 @@ def putItems(pName, pQty, pPrice, pStockQty, pImg, cID):
 # -------------------------------------------------------
 
 def reduceStock(cart):
-    print(cart)
     for keys in cart:
         get_script = '''
             select stock_available 
@@ -459,7 +458,6 @@ def checkoutPurchase(u_id, fullName, email, address, city, state, zip, total, ca
     insert_values = (u_id, fullName, email, address, city, state, zip, total, purchase, total_order_qty)
     cur.execute(insert_script, insert_values)
     if (conn.commit()):
-        print("it entered")
         return True
 
 # -------------------------------------------------------
@@ -490,7 +488,6 @@ def sendEmail(email, title, message):
 
     subject = "Message Sent to Havest Haven"
     body = "Hello, \nGreetings from Harvest Haven!\nThis is an auto generated email that was sent to Harvest Haven" + "\nFrom: " + email + "\nTitle: " + title + "\nMessage: " + message
-    print(body)
 
     em = EmailMessage()
     em['From'] = emailSender

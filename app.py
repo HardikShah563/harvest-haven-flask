@@ -19,7 +19,6 @@ def home():
     sendItems = {}
     for category in allItems: 
         sendItems[category] = allItems[category][0]
-        print(sendItems[category])
         data = base64.b64encode(sendItems[category][5])
         sendItems[category][5] = data.decode()
     
@@ -157,7 +156,6 @@ def checkout():
     msgColor = ""
     msgText = ""
     display_cart = recalculateDisplayCart(session['cart'])
-    print(display_cart)
     total = []
     total.append(calcTotal(display_cart))
     total.append(calcGST(total[0]))
